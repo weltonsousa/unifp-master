@@ -98,7 +98,7 @@
                                 <select id="unidade" class="form-control  col-md-7 col-xs-12"
                                     name="unidade">
                                     @foreach($unidades as $unidade)
-                                    <option value="{{$unidade->IdUnidade}}">{{$unidade->Nome}}</option>
+                                    <option value="{{$unidade->sophia_id}}">{{$unidade->Nome}}</option>
                                     @endforeach
                                 </select>
                             </div>

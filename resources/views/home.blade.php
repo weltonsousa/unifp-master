@@ -55,13 +55,13 @@
                                     <label class="control-label col-md-2 col-sm-2 col-xs-12">Unidade:</label>
                                     <div class="col-md-10 col-sm-10 col-xs-12">
                                         <select class="form-control" name="unidade" id="unidade">
-                                            @if( count($unidade) > 0)
+                                            @if($unidade == null)
                                                 <option value="0" selected>Todas</option>
                                             @else
                                                 <option value="0">Todas</option>
                                             @endif
                                             @foreach ($unidades as $un)
-                                                @if( $un > 0)
+                                                @if(count($unidade) > 0)
                                                     @if($un->IdUnidade == $unidade->IdUnidade)
                                                         <option value="{{$un->IdUnidade}}" selected>{{$un->Nome}}</option>
                                                     @else
@@ -98,7 +98,7 @@
                 <div class="col-md-12 col-sm-4 col-xs-12 tile_stats_count">
                     filtros <b style='color:red;'>ATUAIS</b> utilizados:
                     <span class="count_top"><i class="fa fa-calendar"></i> Período: {{$periodoFiltro}}</span>
-                    @if( count($unidade) > 0)
+                    @if(count($unidade) > 0)
                         <span class="count_top"><i class="fa fa-building-o"></i> Unidade: {{$unidade->Nome}}</span>
                     @else
                         <span class="count_top"><i class="fa fa-building-o"></i> Unidade: Todos</span>

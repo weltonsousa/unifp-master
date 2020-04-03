@@ -71,9 +71,18 @@ class AlunoController extends Controller
         }
     }
 
+    public function funil(){
+        return view('funil-vendas');
+    }
+
+    public function leadsExternos(){
+        return view('leads-externos');
+    }
+
     public function vendasOnline()
     {
         $unidade_id = Auth::user()->unidade_id;
+        $tipo = Auth::user()->tipo_unidade;
         if ($unidade_id > 0) {
             $alunos = DB::connection('mysql2')
                 ->table('clientes')
@@ -81,11 +90,22 @@ class AlunoController extends Controller
                 ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
                     'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
                     'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
-                    'pagamentos_online.unidade_id')
+                    'pagamentos_online.unidade_id','pagamentos_online.pag_tipo')
                 ->where('pagamentos_online.pag_status', '=', 2)
                 ->where('pagamentos_online.unidade_id', '=', $unidade_id)
                 ->get();
-        } else {
+            }else if($unidade_id ==0 && $tipo==2){
+                $alunos = DB::connection('mysql2')
+                ->table('clientes')
+                ->join('pagamentos_online', 'pagamentos_online.cliente_id', 'clientes.id_cliente')
+                ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
+                    'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
+                    'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
+                    'pagamentos_online.unidade_id','pagamentos_online.pag_tipo')
+                ->where('pagamentos_online.pag_status', '=', 2)
+                ->where('pagamentos_online.unidade_id', '=', 0)
+                ->get();
+            } else {
 
             $alunos = DB::connection('mysql2')
                 ->table('clientes')
@@ -93,7 +113,7 @@ class AlunoController extends Controller
                 ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
                     'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
                     'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
-                    'pagamentos_online.unidade_id')
+                    'pagamentos_online.unidade_id','pagamentos_online.pag_tipo')
                 ->where('pagamentos_online.pag_status', '=', 2)
                 ->get();
 
@@ -105,6 +125,7 @@ class AlunoController extends Controller
     public function leads()
     {
         $unidade_id = Auth::user()->unidade_id;
+        $tipo = Auth::user()->tipo_unidade;
         if ($unidade_id > 0) {
             $alunos = DB::connection('mysql2')
                 ->table('clientes')
@@ -112,22 +133,101 @@ class AlunoController extends Controller
                 ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
                     'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
                     'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
-                    'pagamentos_online.unidade_id')
+                    'pagamentos_online.unidade_id','pagamentos_online.pag_tipo','pagamentos_online.cliente_id')
                 ->where('pagamentos_online.pag_status', '<>', 2)
+                ->where('pagamentos_online.pag_codigo', '=', NULL)
                 ->where('pagamentos_online.unidade_id', '=', $unidade_id)
                 ->get();
-        } else {
+        }else if($unidade_id ==0 && $tipo==2){
             $alunos = DB::connection('mysql2')
                 ->table('clientes')
                 ->join('pagamentos_online', 'pagamentos_online.cliente_id', 'clientes.id_cliente')
                 ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
                     'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
                     'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
-                    'pagamentos_online.unidade_id')
+                    'pagamentos_online.unidade_id','pagamentos_online.pag_tipo','pagamentos_online.cliente_id')
                 ->where('pagamentos_online.pag_status', '<>', 2)
+                ->where('pagamentos_online.pag_codigo', '=', NULL)
+                ->where('pagamentos_online.unidade_id', '=', 0)
+                ->get();
+        }else {
+            $alunos = DB::connection('mysql2')
+                ->table('clientes')
+                ->join('pagamentos_online', 'pagamentos_online.cliente_id', 'clientes.id_cliente')
+                ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
+                    'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
+                    'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
+                    'pagamentos_online.unidade_id','pagamentos_online.pag_tipo','pagamentos_online.cliente_id')
+                ->where('pagamentos_online.pag_status', '<>', 2)
+                ->where('pagamentos_online.pag_codigo', '=', NULL)
                 ->get();
         }
         $unidades = Unidade::all();
         return view('leads', compact('alunos', 'unidades'));
+    }
+
+    public function boletos(){
+        $unidade_id = Auth::user()->unidade_id;
+        $tipo = Auth::user()->tipo_unidade;
+        if ($unidade_id > 0) {
+            $alunos = DB::connection('mysql2')
+                ->table('clientes')
+                ->join('pagamentos_online', 'pagamentos_online.cliente_id', 'clientes.id_cliente')
+                ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
+                    'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
+                    'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
+                    'pagamentos_online.unidade_id','pagamentos_online.pag_tipo')
+                ->where('pagamentos_online.pag_status', '<>', 2)
+                ->where('pagamentos_online.pag_codigo', '!=', NULL)
+                ->where('pagamentos_online.unidade_id', '=', $unidade_id)
+                ->get();
+        }else if($unidade_id ==0 && $tipo==2){
+            $alunos = DB::connection('mysql2')
+            ->table('clientes')
+            ->join('pagamentos_online', 'pagamentos_online.cliente_id', 'clientes.id_cliente')
+            ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
+                'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
+                'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
+                'pagamentos_online.unidade_id','pagamentos_online.pag_tipo')
+            ->where('pagamentos_online.pag_status', '<>', 2)
+            ->where('pagamentos_online.pag_codigo', '!=', NULL)
+            ->where('pagamentos_online.unidade_id', '=', 0)
+            ->get();
+            }else{
+            $alunos = DB::connection('mysql2')
+            ->table('clientes')
+            ->join('pagamentos_online', 'pagamentos_online.cliente_id', 'clientes.id_cliente')
+            ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
+                'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
+                'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
+                'pagamentos_online.unidade_id','pagamentos_online.pag_tipo')
+            ->where('pagamentos_online.pag_status', '=', 0)
+            ->where('pagamentos_online.pag_codigo', '!=', NULL)
+            ->get();
+        }
+
+        $unidades = Unidade::all();
+
+        return view('boletos', compact('alunos','unidades'));
+    }
+
+    public function remover(){
+        // $message = new Message();
+        // $message->message = "";
+        // $message->type = "";
+        // try {
+        //     DB::beginTransaction();
+
+        //     User::whereId(request("cliente_id"))->delete();
+
+        //     DB::commit();
+        //     $message->message = 'lead excluído com sucesso';
+        //     $message->type = "success";
+        // } catch (\Exception $e) {
+        //     DB::rollback();
+        //     $message->message = $e->getMessage();
+        //     $message->type = "error";
+        // }
+        // return $this->index()->with(['message' => $message]);
     }
 }

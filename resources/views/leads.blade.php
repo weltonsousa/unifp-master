@@ -27,29 +27,57 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_content">
-                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                <table id="datatable-responsive" class="table table-striped jambo_table bulk_action">
                         <thead>
                             <tr>
                                 <th>Nome Aluno</th>
                                 <th>E-mail</th>
                                 <th>Telefone</th>
                                 <th>Curso de Interesse</th>
+                                <th>Tentativa Pagamento</th>
+                                <th>Data Tentativa</th>
                                 <th>Unidade</th>
+                                <!-- <th>
+                                 Ação
+                                </th> -->
                             </tr>
                         </thead>
                         <tbody>
                              @foreach ($alunos as $aluno)
-                            <tr>
+                                <tr>
                                 <td> {{$aluno->nome}}</td>
                                 <td> {{$aluno->email}}</td>
-                                <td> {{$aluno->pag_telefone}}</td>
+                                <td>
+                                @php 
+                                $acentos = array(' ','-');
+                                $telefone = str_replace($acentos, '', $aluno->pag_telefone); 
+                                 @endphp
+                                 <a href="https://api.whatsapp.com/send?1=pt_BR&phone=55{{$telefone}}" target="_blank" class="btn btn-success"> <i class="fa fa-phone"></i> Clique Aqui Whatshaap </a>
+                                </td>
                                 <td> {{$aluno->pag_produto}}</td>
+                                <td> 
+                                @if($aluno->pag_tipo == 'cartao')
+                                   <button class="btn btn-success"> Cartão</button>
+                                @elseif($aluno->pag_tipo == 'boleto')
+                                    <button class="btn btn-primary"> Boleto</button>
+                                @else
+                                    <button class="btn btn-danger"> Indefinido</button>
+                                @endif
+                               </td>
+                               <td> {{ date('d/m/Y',  strtotime($aluno->pag_data))}}</td>
                                 <td>@foreach ($unidades as $uni)
-                                        @if($aluno->unidade_id == $uni->IdUnidade)
+                                        @if($aluno->unidade_id == $uni->sophia_id)
                                         {{$uni->Nome}}
                                         @endif
                                 @endforeach
-                                </td>
+                            </td>
+                            <!-- <td>
+                            <form action="{{route('remover')}}" method="POST">
+                                   @csrf
+                                   <input name="cliente_id" value="{{$aluno->cliente_id}}"  type="hidden">
+                                   <button type='submit' class="btn btn-danger"> <i class="fa fa-trash"></i> Remover </button>
+                                 </form>
+                            </td> -->
                             </tr>
                             @endforeach
                         </tbody>

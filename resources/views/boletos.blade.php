@@ -17,99 +17,63 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Matriculas</h3>
+                <h3>Pagamentos Pendentes</h3>
             </div>
         </div>
     </div>
     <div class="clearfix"></div>
 
     <div class="row">
-       <!-- <div class="col-md-12 col-sm-10 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>Filtros<small>faça uma busca para encontrar resultados.</small></h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <form class="form-horizontal form-label-left input_mask" action="" method="post">
-                        @csrf                        
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Unidade:</label>
-                            <div>
-                                <select class="form-control" name="unidade" style="width: 300px;">
-                                    <option value="0">Todas</option>                                                                       <option value="118">Imugi Arapiraca</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Período de matricula:</label>
-                            <div class="controls">
-                                <div class="input-prepend input-group">
-                                    <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                    <input type="text" style="width: 260px" name="periodo" id="reservation" class="form-control" value="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ln_solid"></div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2">
-                                <button id="send" type="submit" class="btn btn-success"> <i class="fa fa-search"></i> Buscar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div> -->
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_content">
-                    <table id="datatable-responsive" class="table table-striped jambo_table bulk_action">
-                    <thead>
+                <table id="datatable-responsive" class="table table-striped jambo_table bulk_action">
+                        <thead>
                             <tr>
                                 <th>Nome Aluno</th>
                                 <th>E-mail</th>
                                 <th>Telefone</th>
-                                <th>Forma de Pagamento</th>
-                                <th>Situação do Pagamento</th>
-                                <th>Data do Pagamento</th>
-                                <th>Curso</th>
+                                <th>Curso de Interesse</th>
+                                <th>Forma Pagamento</th>
+                                <th>Data Emissão </th>
                                 <th>Unidade</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($alunos as $aluno)
-                                <tr>
-                                <td> {{$aluno->nome}}</td>
-                                <td> {{$aluno->email}}</td>
-                                <td> {{$aluno->pag_telefone}}</td>
+                           @foreach ($alunos as $aluno)
+                            <tr>
+                              <td>
+                                {{$aluno->nome}}
+                              </td>
+                              <td> {{$aluno->email}}</td>
+                                <td>
+                                @php 
+                                $acentos = array(' ','-');
+                                $telefone = str_replace($acentos, '', $aluno->pag_telefone); 
+                                 @endphp
+                                 <a href="https://api.whatsapp.com/send?1=pt_BR&phone=55{{$telefone}}" target="_blank" class="btn btn-success"> <i class="fa fa-phone"></i> Clique Aqui Whatshaap </a>
+                                </td>
+                                <td> {{$aluno->pag_produto}}</td>
                                 <td> 
                                 @if($aluno->pag_tipo == 'cartao')
                                    <button class="btn btn-success"> Cartão</button>
                                 @elseif($aluno->pag_tipo == 'boleto')
-                                   <button class="btn btn-primary"> Boleto</button>
+                                    <button class="btn btn-primary"> Boleto</button>
                                 @else
                                     <button class="btn btn-danger"> Indefinido</button>
                                 @endif
                                </td>
-                                <td>@if($aluno->pag_status == 2)
-                                    Pago
-                                    @else
-                                    Aberto
-                                    @endif
-                                </td>
-                                <td> {{ date('d/m/Y',  strtotime($aluno->pag_data))}}</td>
-                                <td> {{$aluno->pag_produto}}</td>
+                               <td> {{ date('d/m/Y',  strtotime($aluno->pag_data))}}</td>
                                 <td>@foreach ($unidades as $uni)
                                         @if($aluno->unidade_id == $uni->sophia_id)
                                         {{$uni->Nome}}
                                         @endif
                                 @endforeach
-                                </td>
-                                </tr>
+                            </td>
+                            </tr>
                             @endforeach
                         </tbody>
-
-                     </table>
+                    </table>
                 </div>
             </div>
         </div>
@@ -137,6 +101,7 @@
     <script src="{{URL::asset('assets/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
     <script src="{{URL::asset('assets/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js')}}"></script>
     <script src="{{URL::asset('assets/datatables.net-keytable/js/dataTables.keyTable.min.js')}}"></script>
+    <script src="{{URL::asset('assets/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
     <script src="{{URL::asset('assets/datatables.net-responsive-bs/js/responsive.bootstrap.js')}}"></script>
     <script src="{{URL::asset('assets/datatables.net-scroller/js/dataTables.scroller.min.js')}}"></script>
     <script src="{{URL::asset('assets/jszip/dist/jszip.min.js')}}"></script>

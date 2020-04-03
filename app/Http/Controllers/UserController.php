@@ -28,7 +28,7 @@ class UserController extends Controller
 
     public function add()
     {
-        $unidades = Unidade::all();
+        $unidades = Unidade::orderBy('Nome', 'ASC')->get();
         return view('user-add', ['unidades' => $unidades]);
     }
     public function store()
