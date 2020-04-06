@@ -11,4 +11,8 @@ class Leads extends Model
         'id_lead', 'nome', 'email','telefone','curso','unidade_id','contato'
     ];
     protected $table = 'leads';
+
+    public function unidade(){
+        return $this->hasOne(Unidade::class,"IdUnidade");
+    }
 }

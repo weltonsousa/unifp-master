@@ -25,6 +25,7 @@ class LeadController extends Controller
 
     public function listaLeads(){
         $leads = Leads::all();
+        $unidade = $leads->unidade->Nome;
        
         return Datatables::of($leads)->addColumn('action', function ($lead) {
                 $button = '<button type="button" name="edit_lead" data-id="'.$lead->id_lead.'" class="edit_lead btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
@@ -35,7 +36,7 @@ class LeadController extends Controller
             if($leads->curso == 1){
                 $curso = "Escultura Tradicional";
             }elseif($leads->curso == 25){
-                $curso = "Animaky";
+                $curso = $unidade;
             }else{
                 $curso = "Indefinido";
             }
