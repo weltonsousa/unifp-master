@@ -77,17 +77,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-sm-10 col-xs-6">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>Resultados</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                <canvas id="canvasDoughnut" style="width: 100px; height: 100px!important;"></canvas>
-                </div>
-            </div>
-        </div>
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_content">
@@ -147,6 +136,25 @@
 
 @section('scripts')
 
+
+<script src="{{URL::asset('assets/moment/min/moment.min.js')}}"></script>
+    <script src="{{URL::asset('assets/js/leads.js')}}"></script>
+    <script src="{{URL::asset('assets/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+    <!-- bootstrap-datetimepicker -->
+    <script src="{{URL::asset('assets/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')}}"></script>
+    <!-- Datatables -->
+    <script src="{{URL::asset('assets/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{URL::asset('assets/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{URL::asset('assets/datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{URL::asset('assets/datatables.net-buttons-bs/js/buttons.bootstrap.min.js')}}"></script>
+    <script src="{{URL::asset('assets/datatables.net-buttons/js/buttons.flash.min.js')}}"></script>
+    <script src="{{URL::asset('assets/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
+    <script src="{{URL::asset('assets/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
+    <script src="{{URL::asset('assets/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js')}}"></script>
+    <script src="{{URL::asset('assets/datatables.net-keytable/js/dataTables.keyTable.min.js')}}"></script>
+    <script src="{{URL::asset('assets/datatables.net-responsive-bs/js/responsive.bootstrap.js')}}"></script>
+    <script src="{{URL::asset('assets/datatables.net-scroller/js/dataTables.scroller.min.js')}}"></script>
+    
 <!-- FastClick -->
 <script src="{{URL::asset('assets/fastclick/lib/fastclick.js')}}"></script>
 

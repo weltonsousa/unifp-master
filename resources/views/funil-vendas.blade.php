@@ -67,7 +67,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                <canvas id="mybarChart" height="357" width="715" style="width: 572px; height: 286px;"></canvas>
+                <canvas id="canvasDoughnut" style="width: 100px; height: 100px!important;"></canvas>
                 </div>
             </div>
         </div>
