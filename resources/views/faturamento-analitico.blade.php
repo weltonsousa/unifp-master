@@ -44,7 +44,8 @@
                                         <option value="0">Todas</option>
                                     @endif
                                     @foreach ($unidades as $un)
-                                        @if(count($unidade) > 0)
+                                        {{-- @if(count($unidade) > 0) --}}
+                                        @if( is_array($unidade) ? count($unidade[$unidade->IdUnidade]) : 0 )
                                             @if($un->IdUnidade == $unidade->IdUnidade)
                                                 <option value="{{$un->IdUnidade}}" selected>{{$un->Nome}}</option>
                                             @else
