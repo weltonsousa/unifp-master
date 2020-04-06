@@ -8,7 +8,7 @@ class Unidade extends Model
 {
 
     protected $fillable = [
-        'IdUnidade', 'Nome', 'Descricao'
+        'IdUnidade', 'Nome', 'Descricao','sophia_id'
     ];
     protected $table = 'unidade';
 

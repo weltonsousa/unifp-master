@@ -30,27 +30,27 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content" style=" height:100vh;">
-                    <form class="form-horizontal form-label-left" id="inserir-lead">
+                    <form class="form-horizontal form-label-left" id="inserir-lead" method="POST">
                     @csrf
-                        <div class="form-group">
+                        <div class="form-group editar">
                             <div>
                              <label for=""> Nome Aluno * </label>
-                                <input type="text" class="form-control" name="nome">
+                                <input type="text" class="form-control" id="nome" name="nome">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group editar">
                             <div>
                                 <label for=""> Email * </label>
-                                <input type="email" class="form-control" name="email">
+                                <input type="email" id="email" class="form-control" name="email">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group editar">
                             <div>
                                 <label for=""> Telefone * </label>
-                                <input type="text" class="form-control telefone" name="telefone">
+                                <input type="text" id="telefone" class="form-control telefone" name="telefone">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group editar">
                             <div>
                                 <label for=""> Curso * </label>
                                 <select class="form-control" name="curso_id">
@@ -59,17 +59,17 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group editar">
                             <div>
                                 <label for=""> Unidade * </label>
                                 <select class="form-control" name="unidade">
                                  @foreach($unidades as $unidade)
-                                 <option value="">{{$unidade->Nome}}</option>
+                                 <option value="{{$unidade->sophia_id}}">{{$unidade->Nome}}</option>
                                  @endforeach;
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group editar">
                             <div>
                                 <label for="">como conheceu? </label>
                                 <select class="form-control" name="contato">
@@ -80,20 +80,26 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group status-lead">
+                            <div>
+                                <label for="">Status Lead </label>
+                                <select class="form-control" name="situacao">
+                                 <option value="1">Matriculado</option>
+                                 <option value="2">Em Negociacao</option>
+                                 <option value="3">Desistiu</option>
+                                </select>
+                            </div>
+                            <input type="hidden"  id="id" name="id">
+                        </div>
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div>
-                                <button type="submit" class="btn btn-success btn-lg" id="action"> <i class="fa fa-check"></i> Adicionar</button>
+                                <button type="submit" class="btn btn-success btn-lg" id="action_lead"> <i class="fa fa-check"></i> Adicionar</button>
                                 <button type="button" class="btn btn-danger btn-lg fechar" > <i class="fa fa-close"></i> Cancelar</button>
                             </div>
                         </div>
                     </form>
-                    <div class="col-md-12" id="form-result">
-                        <div class="panel panel-success sucesso">
-                            <div class="panel-heading"> Sucesso </div>
-                            <div class="panel-body">Cadastro inserido com sucesso :)</div>
-                        </div>
-                    </div>
+                    <span id="form_result" width="100%"></span>
                 </div>
             </div>
         </div>
@@ -113,7 +119,9 @@
                                 <th>Telefone</th>
                                 <th>Curso</th>
                                 <th>Unidade</th>
+                                <th>Como Conheceu</th>
                                 <th>Data</th>
+                                <th>Situação</th>
                                 <th>Ação</th>
                             </tr>
                         </thead>

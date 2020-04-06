@@ -57,8 +57,10 @@ Route::get('/report-leads-externos', 'LeadController@index')->name('report-leads
 Route::get('/report-fatanalitico', 'FaturamentoAnaliticoController@index')->name('report-fatanalitico');
 Route::post('/report-fatanalitico', 'FaturamentoAnaliticoController@index')->name('report-fatanalitico');
 Route::get('/GetExcel', 'FaturamentoAnaliticoController@GetExcel')->name('GetExcel');
-Route::post('/inserir_lead', 'LeadController@store')->name('inserir_lead');
+Route::post('/insert_lead', 'LeadController@store')->name('insert_lead');
+Route::get('editar_lead/{id}/edit', 'LeadController@edit_lead')->name('editar_lead');
 // Remover Leads
 Route::post('/remover', 'AlunoController@remover')->name('remover');
+Route::post('leads_externos/update', 'LeadController@update')->name('leads_externos.update');
 
 
