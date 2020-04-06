@@ -2,42 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use DB;
-use Illuminate\Support\Facades\Validator;
-use Yajra\Datatables\Datatables;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
 use App\Leads;
 use App\Unidade;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class LeadController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         $unidade_id = Auth::user()->unidade_id;
-        $unidades = Unidade::all()->where("sophia_id","=",$unidade_id);
+        $unidades = Unidade::all()->where("sophia_id", "=", $unidade_id);
 
-       
-
-        return view('leads-externos',compact("unidades"));
+        return view('leads-externos', compact("unidades"));
     }
 
-    public function listaLeads(){
+    public function listaLeads()
+    {
         $leads = Leads::all();
-        $unidade = $leads->unidade->Nome;
-       
+
+        dd($leads->unidade->Nome);
+
         return Datatables::of($leads)->addColumn('action', function ($lead) {
-                $button = '<button type="button" name="edit_lead" data-id="'.$lead->id_lead.'" class="edit_lead btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
+            $button = '<button type="button" name="edit_lead" data-id="' . $lead->id_lead . '" class="edit_lead btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
             return $button;
-        
-        })->addColumn('curso', function($leads) {
-            
-            if($leads->curso == 1){
+
+        })->addColumn('curso', function ($leads) {
+
+            if ($leads->curso == 1) {
                 $curso = "Escultura Tradicional";
-            }elseif($leads->curso == 25){
-                $curso = $unidade;
-            }else{
+            } elseif ($leads->curso == 25) {
+                $curso = "Animaky";
+            } else {
                 $curso = "Indefinido";
             }
             return $curso;
@@ -46,30 +44,31 @@ class LeadController extends Controller
 
     public function edit_lead($id)
     {
-            $data = Leads::find($id);
-            return response()->json(['data' => $data]);
+        $data = Leads::find($id);
+        return response()->json(['data' => $data]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $rules = array(
-            'nome' =>  'required',
-            'email' =>  'required|unique:leads',
-            'telefone' =>  'required|unique:leads'
+            'nome' => 'required',
+            'email' => 'required|unique:leads',
+            'telefone' => 'required|unique:leads',
         );
 
         $error = Validator::make($request->all(), $rules);
 
-        if($error->fails()){
+        if ($error->fails()) {
             return response()->json(['errors' => $error->errors()->all()]);
         }
 
         $form_data = array(
-            'nome' =>  $request->nome,
+            'nome' => $request->nome,
             'email' => $request->email,
             'telefone' => $request->telefone,
             'curso' => $request->curso_id,
             'unidade_id' => $request->unidade,
-            'contato' => $request->contato
+            'contato' => $request->contato,
         );
 
         Leads::create($form_data);
@@ -79,23 +78,22 @@ class LeadController extends Controller
 
     public function update(Request $request)
     {
-    
+
         $rules = array(
-            'situacao' =>  'required',
+            'situacao' => 'required',
         );
 
-            $error = Validator::make($request->all(), $rules);
+        $error = Validator::make($request->all(), $rules);
 
-            if($error->fails())
-            {
-                return response()->json(['errors' => $error->errors()->all()]);
-            }
+        if ($error->fails()) {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
 
-            $form_data = array(
-                'situacao' => $request->situacao
-            );
+        $form_data = array(
+            'situacao' => $request->situacao,
+        );
 
-       Leads::where("id_lead","=",$request->id)->update($form_data);
+        Leads::where("id_lead", "=", $request->id)->update($form_data);
 
         return response()->json(['success' => 'Lead Atualizado com Sucesso']);
     }

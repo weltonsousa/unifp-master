@@ -31,13 +31,30 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form class="form-horizontal form-label-left input_mask" action="" method="post">
-                        @csrf                        
+                <form class="form-horizontal form-label-left input_mask" action="{{route('report-vendas')}}" method="post">
+                        @csrf
                         <div class="form-group">
                             <label class="control-label col-md-2 col-sm-2 col-xs-12">Unidade:</label>
                             <div>
                                 <select class="form-control" name="unidade" style="width: 300px;">
-                                    <option value="0">Todas</option>                                                                       <option value="118">Imugi Arapiraca</option>
+                                    <option value="0">Todas</option>
+                                    @if($unidade == null)
+                                        <option value="0" selected>Todas</option>
+                                    @else
+                                        <option value="0">Todas</option>
+                                    @endif
+                                    @foreach ($unidades as $un)
+                                        {{-- @if(count($unidade) > 0) --}}
+                                        @if( is_array($unidade) ? count($unidade[$unidade->IdUnidade]) : 0 )
+                                            @if($un->IdUnidade == $unidade->IdUnidade)
+                                                <option value="{{$un->IdUnidade}}" selected>{{$un->Nome}}</option>
+                                            @else
+                                                <option value="{{$un->IdUnidade}}">{{$un->Nome}}</option>
+                                            @endif
+                                        @else
+                                            <option value="{{$un->IdUnidade}}">{{$un->Nome}}</option>
+                                        @endif
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -93,7 +110,7 @@
                                 <td> {{$aluno->nome}}</td>
                                 <td> {{$aluno->email}}</td>
                                 <td> {{$aluno->pag_telefone}}</td>
-                                <td> 
+                                <td>
                                 @if($aluno->pag_tipo == 'cartao')
                                    <button class="btn btn-success"> Cartão</button>
                                 @elseif($aluno->pag_tipo == 'boleto')

@@ -9,7 +9,7 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 /*Route::middleware('auth')->group(function () {
 
 });*/
@@ -31,15 +31,14 @@ Route::get('404', ['as' => '404', 'uses' => 'ErrorController@notfound']);
 Route::get('500', ['as' => '500', 'uses' => 'ErrorController@InternalError']);
 
 /*Gráficos*/
-Route::get('/matriculas-mes','HomeController@GetMatriculasMes')->name('matriculas-mes');
-Route::get('/matriculas-dia','HomeController@GetMatriculasDia')->name('matriculas-dia');
-Route::post('/receitas-despesas','HomeController@GetReceitasDespesas')->name('receitas-despesas');
-Route::get('/frm-alunos-ativos-inativos','GraficosController@FrmAlunosAtivosInativos')->name('frm-alunos-ativos-inativos');
-Route::post('/alunos-ativos-inativos','GraficosController@GetAlunosAtivosInativos')->name('alunos-ativos-inativos');
+Route::get('/matriculas-mes', 'HomeController@GetMatriculasMes')->name('matriculas-mes');
+Route::get('/matriculas-dia', 'HomeController@GetMatriculasDia')->name('matriculas-dia');
+Route::post('/receitas-despesas', 'HomeController@GetReceitasDespesas')->name('receitas-despesas');
+Route::get('/frm-alunos-ativos-inativos', 'GraficosController@FrmAlunosAtivosInativos')->name('frm-alunos-ativos-inativos');
+Route::post('/alunos-ativos-inativos', 'GraficosController@GetAlunosAtivosInativos')->name('alunos-ativos-inativos');
 
-Route::get('/frm-faturamento-receita-despesa','GraficosController@FrmReceitasDespesas')->name('frm-faturamento-receita-despesa');
-Route::post('/faturamento-receita-despesa','GraficosController@GetReceitasDespesas')->name('faturamento-receita-despesa');
-
+Route::get('/frm-faturamento-receita-despesa', 'GraficosController@FrmReceitasDespesas')->name('frm-faturamento-receita-despesa');
+Route::post('/faturamento-receita-despesa', 'GraficosController@GetReceitasDespesas')->name('faturamento-receita-despesa');
 
 /*reports*/
 Route::get('/report-alunos', 'AlunoController@index')->name('report-alunos');
@@ -47,6 +46,7 @@ Route::get('/report-vendas', 'AlunoController@vendasOnline')->name('report-venda
 Route::get('/report-leads', 'AlunoController@leads')->name('report-leads');
 Route::get('/report-boletos', 'AlunoController@boletos')->name('report-boletos');
 Route::post('/report-alunos', 'AlunoController@index')->name('report-alunos');
+Route::post('/report-vendas', 'AlunoController@vendasOnline')->name('report-vendas');
 Route::get('/report-faturamentos', 'FaturamentoController@index')->name('report-faturamentos');
 Route::post('/report-faturamentos', 'FaturamentoController@index')->name('report-faturamentos');
 Route::get('/alunos_leads_externos', 'LeadController@listaLeads')->name('alunos_leads_externos');
@@ -62,5 +62,3 @@ Route::get('editar_lead/{id}/edit', 'LeadController@edit_lead')->name('editar_le
 // Remover Leads
 Route::post('/remover', 'AlunoController@remover')->name('remover');
 Route::post('leads_externos/update', 'LeadController@update')->name('leads_externos.update');
-
-
