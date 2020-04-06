@@ -61,9 +61,4 @@ Route::post('/insert_lead', 'LeadController@store')->name('insert_lead');
 Route::get('editar_lead/{id}/edit', 'LeadController@edit_lead')->name('editar_lead');
 // Remover Leads
 Route::post('/remover', 'AlunoController@remover')->name('remover');
-<<<<<<< HEAD
-=======
 Route::post('leads_externos/update', 'LeadController@update')->name('leads_externos.update');
-
-
->>>>>>> 4aeae3fa21f9f8c1387341d6007b088f6d2a6a00

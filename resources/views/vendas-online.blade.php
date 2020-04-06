@@ -84,11 +84,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-<<<<<<< HEAD
-
-=======
                 <canvas id="canvasDoughnut" style="width: 100px; height: 100px!important;"></canvas>
->>>>>>> 4aeae3fa21f9f8c1387341d6007b088f6d2a6a00
                 </div>
             </div>
         </div>
