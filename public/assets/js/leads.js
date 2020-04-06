@@ -58,8 +58,8 @@ $(function () {
             {data: 'email', name: 'email'},
             {data: 'telefone', name: 'telefone'},
             {data: 'curso', curso: 'curso'},
-            {data: 'unidade_id', curso: 'unidade_id'},
-            {data: 'contato', contato: 'contato'},
+            {data: 'unidade', unidade: 'unidade'},
+            {data: 'conheceu', conheceu: 'conheceu'},
             {data: 'data', data: 'created_at'},
             {data: 'situacao', situacao: 'situacao'},
             {data: 'action', name: 'action', orderable: false, searchable: false}
