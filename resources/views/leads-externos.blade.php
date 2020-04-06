@@ -24,75 +24,82 @@
     </div>
     <div class="col-md-4 col-sm-4 col-xs-4 hidden-panel animated"  id="lead-panel" style="position:fixed; top:0; right:0; z-index:100; float:right;">
     <div class="x_panel">
+    <button class="btn btn-default pull-right fechar"><i class="fa fa-close"></i></button>
                 <div class="x_title">
                     <h2> <i class="fa fa-user"></i> Adicionar Lead Externo</small></h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content" style=" height:100vh;">
-                    <form class="form-horizontal form-label-left input_mask" action="" method="post">
-                        <input type="hidden" name="_token" value="RQlU607kd6JGbbnhI2yyLqW3WcFaIenv4AuYFmrN">                        
-                        <div class="form-group">
+                    <form class="form-horizontal form-label-left" id="inserir-lead" method="POST">
+                    @csrf
+                        <div class="form-group editar">
                             <div>
                              <label for=""> Nome Aluno * </label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" id="nome" name="nome">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group editar">
                             <div>
                                 <label for=""> Email * </label>
-                                <input type="text" class="form-control">
+                                <input type="email" id="email" class="form-control" name="email">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group editar">
                             <div>
                                 <label for=""> Telefone * </label>
-                                <input type="text" class="form-control">
+                                <input type="text" id="telefone" class="form-control telefone" name="telefone">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group editar">
                             <div>
                                 <label for=""> Curso * </label>
-                                <input type="text" class="form-control">
+                                <select class="form-control" name="curso_id">
+                                 <option value="1">Esculpture Tradicional</option>
+                                 <option value="25">Animaky</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group editar">
                             <div>
                                 <label for=""> Unidade * </label>
-                                <select class="form-control" >
-                                 <option value="">Minha Unidade</option>
+                                <select class="form-control" name="unidade">
+                                 @foreach($unidades as $unidade)
+                                 <option value="{{$unidade->sophia_id}}">{{$unidade->Nome}}</option>
+                                 @endforeach;
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group editar">
                             <div>
-                                <label for="">Status Lead * </label>
-                                <select class="form-control" >
-                                 <option value="">aqui</option>
+                                <label for="">como conheceu? </label>
+                                <select class="form-control" name="contato">
+                                 <option value="1">Facebook</option>
+                                 <option value="2">Instagram</option>
+                                 <option value="3">Eventos</option>
+                                 <option value="4">Outros</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="form-group status-lead">
+                            <div>
+                                <label for="">Status Lead </label>
+                                <select class="form-control" name="situacao">
+                                 <option value="1">Matriculado</option>
+                                 <option value="2">Em Negociacao</option>
+                                 <option value="3">Desistiu</option>
+                                </select>
+                            </div>
+                            <input type="hidden"  id="id" name="id">
                         </div>
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div>
-                                <button type="button" id="lead" class="btn btn-success btn-lg"> <i class="fa fa-check"></i> Adicionar</button>
-                                <button type="button" class="btn btn-danger btn-lg" id="fechar"> <i class="fa fa-close"></i> Cancelar</button>
+                                <button type="submit" class="btn btn-success btn-lg" id="action_lead"> <i class="fa fa-check"></i> Adicionar</button>
+                                <button type="button" class="btn btn-danger btn-lg fechar" > <i class="fa fa-close"></i> Cancelar</button>
                             </div>
                         </div>
                     </form>
-                    <div class="col-md-12">
-                        <div class="panel panel-success sucesso">
-                            <div class="panel-heading"> Sucesso </div>
-                            <div class="panel-body">Cadastro inserido com sucesso :)</div>
-                        </div>
-                        <div class="panel panel-danger falha">
-                            <div class="panel-heading"> Opss ocorreu um erro ;/ </div>
-                            <div class="panel-body">Ocorreu um erro no cadastro</div>
-                        </div>
-                        <div class="panel panel-warning alerta">
-                            <div class="panel-heading"> Campos Obrigatorios ;/ </div>
-                            <div class="panel-body">Cadastro Inserido Comsucesso</div>
-                        </div>
-                    </div>
+                    <span id="form_result" width="100%"></span>
                 </div>
             </div>
         </div>
@@ -104,16 +111,18 @@
             <div class="x_panel">
             <br>
                 <div class="x_content">
-                    <table id="datatable-responsive" class="table table-striped jambo_table bulk_action">
+                    <table id="leads-externos" class="table table-striped jambo_table bulk_action" style="width:100%">
                     <thead>
                             <tr>
                                 <th>Nome</th>
                                 <th>E-mail</th>
                                 <th>Telefone</th>
                                 <th>Curso</th>
-                                <th>Situação Leads</th>
                                 <th>Unidade</th>
+                                <th>Como Conheceu</th>
                                 <th>Data</th>
+                                <th>Situação</th>
+                                <th>Ação</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -130,6 +139,7 @@
 @section('scripts')
 
     <!-- bootstrap-daterangepicker -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
     <script src="{{URL::asset('assets/moment/min/moment.min.js')}}"></script>
     <script src="{{URL::asset('assets/js/leads.js')}}"></script>
     <script src="{{URL::asset('assets/bootstrap-daterangepicker/daterangepicker.js')}}"></script>

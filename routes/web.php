@@ -49,13 +49,21 @@ Route::post('/report-alunos', 'AlunoController@index')->name('report-alunos');
 Route::post('/report-vendas', 'AlunoController@vendasOnline')->name('report-vendas');
 Route::get('/report-faturamentos', 'FaturamentoController@index')->name('report-faturamentos');
 Route::post('/report-faturamentos', 'FaturamentoController@index')->name('report-faturamentos');
+Route::get('/alunos_leads_externos', 'LeadController@listaLeads')->name('alunos_leads_externos');
 Route::get('/report-turmas', 'TurmaController@index')->name('report-turmas');
 Route::post('/report-turmas', 'TurmaController@index')->name('report-turmas');
 Route::get('/report-funil-vendas', 'AlunoController@funil')->name('report-funil-vendas');
-Route::get('/report-leads-externos', 'AlunoController@leadsExternos')->name('report-leads-externos');
+Route::get('/report-leads-externos', 'LeadController@index')->name('report-leads-externos');
 Route::get('/report-fatanalitico', 'FaturamentoAnaliticoController@index')->name('report-fatanalitico');
 Route::post('/report-fatanalitico', 'FaturamentoAnaliticoController@index')->name('report-fatanalitico');
 Route::get('/GetExcel', 'FaturamentoAnaliticoController@GetExcel')->name('GetExcel');
-
+Route::post('/insert_lead', 'LeadController@store')->name('insert_lead');
+Route::get('editar_lead/{id}/edit', 'LeadController@edit_lead')->name('editar_lead');
 // Remover Leads
 Route::post('/remover', 'AlunoController@remover')->name('remover');
+<<<<<<< HEAD
+=======
+Route::post('leads_externos/update', 'LeadController@update')->name('leads_externos.update');
+
+
+>>>>>>> 4aeae3fa21f9f8c1387341d6007b088f6d2a6a00
