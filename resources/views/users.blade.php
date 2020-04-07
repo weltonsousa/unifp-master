@@ -34,6 +34,7 @@
                                 <th>E-mail</th>
                                 <th>Data de cadastro</th>
                                 <th>Ultima atualização</th>
+                                <th>Nivel Acesso</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -44,6 +45,16 @@
                                     <th>{{$user->email}}</th>
                                     <th>{{$user->created_at}}</th>
                                     <th>{{$user->updated_at}}</th>
+                                    <th>
+                                    @if($user->nivel ==0)
+                                    Master
+                                    @elseif($user->nivel ==1)
+                                    Marketing
+                                    @elseif($user->nivel ==2)
+                                    Operacional
+                                    @elseif($user->nivel ==3)
+                                    Comercial
+                                    @endif</th>
                                     <th>
                                         <a title="Editar" href="{{ route('user-edit',$user->id) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
                                         <a title="Excluir" href="#"  data-url="{{ route('user-delete',$user->id) }}" data-toggle="modal" data-target="#confirm-delete"  class="btn btn-danger"><i class="fa fa-trash"></i></a>

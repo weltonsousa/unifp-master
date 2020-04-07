@@ -46,6 +46,7 @@ class UserController extends Controller
                 "unidade_id" => request('unidade'),
                 "tipo_unidade" => request('tipo-unidade'),
                 "password" => bcrypt(request('password')),
+                "nivel" => request('nivel'),
             ]);
             DB::commit();
         } else {
@@ -63,6 +64,7 @@ class UserController extends Controller
                 $user->unidade_id = request('unidade');
                 $user->tipo_unidade = request('tipo-unidade');
                 $user->password = bcrypt(request('password'));
+                $user->nivel =  request('nivel');
                 $user->save();
             }
             DB::commit();

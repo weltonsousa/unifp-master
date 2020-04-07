@@ -92,6 +92,21 @@
                         </div>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="unidade">
+                            Selecione Nivel de Acesso <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select id="nivel" class="form-control  col-md-7 col-xs-12"
+                                    name="nivel">
+                                    <option value="0">Master</option>
+                                    <option value="1">Marketing</option>
+                                    <option value="2">Operacional</option>
+                                    <option value="3">Comercial</option>
+                                    <option value="4">Financeiro</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="unidade">
                             Selecione Unidade <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
