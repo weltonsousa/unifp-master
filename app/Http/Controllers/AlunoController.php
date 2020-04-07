@@ -235,7 +235,9 @@ class AlunoController extends Controller
     }
     public function leads()
     {
-        return view('leads');
+        $unidades = Unidade::all();
+
+        return view('leads', compact("unidades"));
     }
 
     public function boletos()

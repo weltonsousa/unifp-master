@@ -21,6 +21,38 @@
             </div>
         </div>
     </div>
+    <div class="col-md-4 col-sm-4 col-xs-4 hidden-panel animated"  id="lead-aluno-panel" style="position:fixed; top:0; right:0; z-index:100; float:right;">
+    <div class="x_panel">
+    <button class="btn btn-default pull-right fechar"><i class="fa fa-close"></i></button>
+                <div class="x_title">
+                    <h2> <i class="fa fa-home"></i> Encaminhar Lead Unidade</small></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content" style=" height:100vh;">
+                    <form class="form-horizontal form-label-left" id="inserir-lead" method="POST">
+                    @csrf
+                        <div class="form-group editar">
+                            <div>
+                                <label for=""> Unidade * </label>
+                                <select class="form-control" name="unidade">
+                                 @foreach($unidades as $unidade)
+                                 <option value="{{$unidade->sophia_id}}">{{$unidade->Nome}}</option>
+                                 @endforeach;
+                                </select>
+                            </div>
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div>
+                                <button type="submit" class="btn btn-success btn-lg" id="action_lead_aluno"> <i class="fa fa-check"></i> Adicionar</button>
+                                <button type="button" class="btn btn-danger btn-lg fechar" > <i class="fa fa-close"></i> Cancelar</button>
+                            </div>
+                        </div>
+                    </form>
+                    <span id="form_result" width="100%"></span>
+                </div>
+            </div>
+        </div>
     <div class="clearfix"></div>
 
     <div class="row">

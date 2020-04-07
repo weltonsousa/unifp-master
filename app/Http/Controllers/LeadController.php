@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Yajra\Datatables\Datatables;
+use DB;
 
 class LeadController extends Controller
 {
@@ -79,7 +80,7 @@ class LeadController extends Controller
         })->addColumn('curso', function ($leads) {
 
             if ($leads->curso == 1) {
-                $curso = $leads->unidade->Nome;
+                $curso = "Escultura Tradicional";
             } elseif ($leads->curso == 25) {
                 $curso = "Animaky";
             } else {

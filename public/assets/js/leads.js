@@ -6,10 +6,14 @@ $("#add-lead").click(function(){
     
 });
 
+
+
 $(".fechar").click(function(){
     $("#lead-panel").hide("slow");
+    $("#lead-aluno-panel").hide("slow");
     
 });
+
 
 $(document).on('click', '.edit_lead', function(){
     var id = $(this).attr('data-id');
@@ -26,6 +30,21 @@ $(document).on('click', '.edit_lead', function(){
          $('#email').val(html.data.email);
          $('#telefone').val(html.data.telefone);
          $('#id').val(html.data.id_lead);
+         $("#lead-panel").toggle("slow");
+        }
+    });
+    
+});
+
+$(document).on('click', '.edit_lead_aluno', function(){
+    var id = $(this).attr('data-id');
+    $('#form_result').html('');
+    $('#action_lead_aluno').html('<i class="fa fa-check"></i> Encaminhar').prop("value","editar");
+    $("#lead-aluno-panel").toggle("slow");
+    $.ajax({
+        url:"/editar_lead/"+id+"/edit",
+        dataType:"json",
+        success:function(html){
          $("#lead-panel").toggle("slow");
         }
     });
