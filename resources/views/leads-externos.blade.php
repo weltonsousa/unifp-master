@@ -93,7 +93,7 @@
                         </div>
                         <div class="ln_solid"></div>
                         <div class="form-group">
-                            <div>
+                            <div width="100%">
                                 <button type="submit" class="btn btn-success btn-lg" id="action_lead"> <i class="fa fa-check"></i> Adicionar</button>
                                 <button type="button" class="btn btn-danger btn-lg fechar" > <i class="fa fa-close"></i> Cancelar</button>
                             </div>

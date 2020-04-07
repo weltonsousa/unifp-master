@@ -40,12 +40,17 @@ $(document).on('click', '.edit_lead_aluno', function(){
     var id = $(this).attr('data-id');
     $('#form_result').html('');
     $('#action_lead_aluno').html('<i class="fa fa-check"></i> Encaminhar').prop("value","editar");
-    $("#lead-aluno-panel").toggle("slow");
+   
     $.ajax({
-        url:"/editar_lead/"+id+"/edit",
+        url:"/editar_lead_aluno/"+id+"/edit",
         dataType:"json",
         success:function(html){
-         $("#lead-panel").toggle("slow");
+            $('#nome').val(html.data.pag_nome);
+            $('#email').val(html.data.pag_email);
+            $('#curso').val(html.data.pag_produto);
+            $('#telefone').val(html.data.pag_telefone);
+            $("#lead-aluno-panel").toggle("slow");
+         
         }
     });
     

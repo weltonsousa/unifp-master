@@ -9,7 +9,7 @@ class PagamentoOnline extends Model
     protected $connection = 'mysql2';
 
     protected $fillable = [
-        'nome', 'email',
+        'pag_id','nome', 'email',
     ];
 
     protected $primaryKey = 'pag_id';

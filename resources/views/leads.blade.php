@@ -31,7 +31,31 @@
                 <div class="x_content" style=" height:100vh;">
                     <form class="form-horizontal form-label-left" id="inserir-lead" method="POST">
                     @csrf
-                        <div class="form-group editar">
+                        <div class="form-group">
+                            <div>
+                                <label for=""> Nome  </label>
+                                <input type="text" class="form-control" readonly id="nome" name="nome">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <label for=""> Email  </label>
+                                <input type="text" class="form-control" readonly id="email" name="email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <label for=""> Curso  </label>
+                                <input type="text" class="form-control" readonly id="curso" name="curso">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <label for=""> Telefone  </label>
+                                <input type="text" class="form-control" readonly id="telefone" name="telefone">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <div>
                                 <label for=""> Unidade * </label>
                                 <select class="form-control" name="unidade">
@@ -43,7 +67,7 @@
                         </div>
                         <div class="ln_solid"></div>
                         <div class="form-group">
-                            <div>
+                            <div width="100%">
                                 <button type="submit" class="btn btn-success btn-lg" id="action_lead_aluno"> <i class="fa fa-check"></i> Adicionar</button>
                                 <button type="button" class="btn btn-danger btn-lg fechar" > <i class="fa fa-close"></i> Cancelar</button>
                             </div>
