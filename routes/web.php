@@ -50,6 +50,7 @@ Route::post('/report-vendas', 'AlunoController@vendasOnline')->name('report-vend
 Route::get('/report-faturamentos', 'FaturamentoController@index')->name('report-faturamentos');
 Route::post('/report-faturamentos', 'FaturamentoController@index')->name('report-faturamentos');
 Route::get('/alunos_leads_externos', 'LeadController@listaLeads')->name('alunos_leads_externos');
+Route::get('/alunos_leads', 'LeadController@listaAlunosLeads')->name('alunos_leads');
 Route::get('/report-turmas', 'TurmaController@index')->name('report-turmas');
 Route::post('/report-turmas', 'TurmaController@index')->name('report-turmas');
 Route::get('/report-funil-vendas', 'AlunoController@funil')->name('report-funil-vendas');

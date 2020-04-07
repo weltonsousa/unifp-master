@@ -21,6 +21,54 @@ class LeadController extends Controller
         return view('leads-externos', compact("unidades"));
     }
 
+    public function listaAlunosLeads()
+    {
+        $unidade_id = Auth::user()->unidade_id;
+        $tipo = Auth::user()->tipo_unidade;
+        if ($unidade_id > 0) {
+            $alunos = DB::connection('mysql2')
+                ->table('clientes')
+                ->join('pagamentos_online', 'pagamentos_online.cliente_id', 'clientes.id_cliente')
+                ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
+                    'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
+                    'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
+                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id')
+                ->where('pagamentos_online.pag_status', '<>', 2)
+                ->where('pagamentos_online.pag_codigo', '=', null)
+                ->where('pagamentos_online.unidade_id', '=', $unidade_id)
+                ->get();
+        } else if ($unidade_id == 0 && $tipo == 2) {
+            $alunos = DB::connection('mysql2')
+                ->table('clientes')
+                ->join('pagamentos_online', 'pagamentos_online.cliente_id', 'clientes.id_cliente')
+                ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
+                    'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
+                    'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
+                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id')
+                ->where('pagamentos_online.pag_status', '<>', 2)
+                ->where('pagamentos_online.pag_codigo', '=', null)
+                ->where('pagamentos_online.unidade_id', '=', 0)
+                ->get();
+        } else {
+            $alunos = DB::connection('mysql2')
+                ->table('clientes')
+                ->join('pagamentos_online', 'pagamentos_online.cliente_id', 'clientes.id_cliente')
+                ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
+                    'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
+                    'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
+                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id')
+                ->where('pagamentos_online.pag_status', '<>', 2)
+                ->where('pagamentos_online.pag_codigo', '=', null)
+                ->get();
+        }
+        
+        return Datatables::of($alunos)->addColumn('action', function ($alunos) {
+            $button = '<button type="button" name="edit_lead_aluno" data-id="' . $alunos->cliente_id . '" class="edit_lead_aluno btn btn-success btn-md"> <i class="fa fa-external-link"></i> Enviar </button>';
+            return $button;
+
+        })->rawColumns(['action'])->make(true);
+    }
+
     public function listaLeads()
     {
         $leads = Leads::all();

@@ -94,6 +94,45 @@
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
             </div>
+            <tbody>
+                             @foreach ($alunos as $aluno)
+                                <tr>
+                                <td> {{$aluno->nome}}</td>
+                                <td> {{$aluno->email}}</td>
+                                <td>
+                                @php 
+                                $acentos = array(' ','-');
+                                $telefone = str_replace($acentos, '', $aluno->pag_telefone); 
+                                 @endphp
+                                 <a href="https://api.whatsapp.com/send?1=pt_BR&phone=55{{$telefone}}" target="_blank" class="btn btn-success"> <i class="fa fa-phone"></i> Clique Aqui Whatshaap </a>
+                                </td>
+                                <td> {{$aluno->pag_produto}}</td>
+                                <td> 
+                                @if($aluno->pag_tipo == 'cartao')
+                                   <button class="btn btn-success"> Cartão</button>
+                                @elseif($aluno->pag_tipo == 'boleto')
+                                    <button class="btn btn-primary"> Boleto</button>
+                                @else
+                                    <button class="btn btn-danger"> Indefinido</button>
+                                @endif
+                               </td>
+                               <td> {{ date('d/m/Y',  strtotime($aluno->pag_data))}}</td>
+                                <td>@foreach ($unidades as $uni)
+                                        @if($aluno->unidade_id == $uni->sophia_id)
+                                        {{$uni->Nome}}
+                                        @endif
+                                @endforeach
+                            </td>
+                            <!-- <td>
+                            <form action="{{route('remover')}}" method="POST">
+                                   @csrf
+                                   <input name="cliente_id" value="{{$aluno->cliente_id}}"  type="hidden">
+                                   <button type='submit' class="btn btn-danger"> <i class="fa fa-trash"></i> Remover </button>
+                                 </form>
+                            </td> -->
+                            </tr>
+                            @endforeach
+                        </tbody>
         </div>
     </body>
 </html>

@@ -27,7 +27,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_content">
-                <table id="datatable-responsive" class="table table-striped jambo_table bulk_action">
+                <table id="leads" class="table table-striped jambo_table bulk_action" width="100%">
                         <thead>
                             <tr>
                                 <th>Nome Aluno</th>
@@ -37,49 +37,13 @@
                                 <th>Tentativa Pagamento</th>
                                 <th>Data Tentativa</th>
                                 <th>Unidade</th>
-                                <!-- <th>
-                                 Ação
-                                </th> -->
+                               <th>
+                                 Encaminhar
+                                </th> 
                             </tr>
                         </thead>
                         <tbody>
-                             @foreach ($alunos as $aluno)
-                                <tr>
-                                <td> {{$aluno->nome}}</td>
-                                <td> {{$aluno->email}}</td>
-                                <td>
-                                @php 
-                                $acentos = array(' ','-');
-                                $telefone = str_replace($acentos, '', $aluno->pag_telefone); 
-                                 @endphp
-                                 <a href="https://api.whatsapp.com/send?1=pt_BR&phone=55{{$telefone}}" target="_blank" class="btn btn-success"> <i class="fa fa-phone"></i> Clique Aqui Whatshaap </a>
-                                </td>
-                                <td> {{$aluno->pag_produto}}</td>
-                                <td> 
-                                @if($aluno->pag_tipo == 'cartao')
-                                   <button class="btn btn-success"> Cartão</button>
-                                @elseif($aluno->pag_tipo == 'boleto')
-                                    <button class="btn btn-primary"> Boleto</button>
-                                @else
-                                    <button class="btn btn-danger"> Indefinido</button>
-                                @endif
-                               </td>
-                               <td> {{ date('d/m/Y',  strtotime($aluno->pag_data))}}</td>
-                                <td>@foreach ($unidades as $uni)
-                                        @if($aluno->unidade_id == $uni->sophia_id)
-                                        {{$uni->Nome}}
-                                        @endif
-                                @endforeach
-                            </td>
-                            <!-- <td>
-                            <form action="{{route('remover')}}" method="POST">
-                                   @csrf
-                                   <input name="cliente_id" value="{{$aluno->cliente_id}}"  type="hidden">
-                                   <button type='submit' class="btn btn-danger"> <i class="fa fa-trash"></i> Remover </button>
-                                 </form>
-                            </td> -->
-                            </tr>
-                            @endforeach
+                           
                         </tbody>
                     </table>
                 </div>
@@ -91,7 +55,9 @@
 @section('scripts')
 
     <!-- bootstrap-daterangepicker -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
     <script src="{{URL::asset('assets/moment/min/moment.min.js')}}"></script>
+    <script src="{{URL::asset('assets/js/leads.js')}}"></script>
     <script src="{{URL::asset('assets/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
     <!-- bootstrap-datetimepicker -->
     <script src="{{URL::asset('assets/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')}}"></script>
@@ -109,7 +75,6 @@
     <script src="{{URL::asset('assets/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
     <script src="{{URL::asset('assets/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js')}}"></script>
     <script src="{{URL::asset('assets/datatables.net-keytable/js/dataTables.keyTable.min.js')}}"></script>
-    <script src="{{URL::asset('assets/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
     <script src="{{URL::asset('assets/datatables.net-responsive-bs/js/responsive.bootstrap.js')}}"></script>
     <script src="{{URL::asset('assets/datatables.net-scroller/js/dataTables.scroller.min.js')}}"></script>
     <script src="{{URL::asset('assets/jszip/dist/jszip.min.js')}}"></script>
