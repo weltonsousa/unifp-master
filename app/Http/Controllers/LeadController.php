@@ -7,7 +7,6 @@ use App\Unidade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use DB;
 use Yajra\Datatables\Datatables;
 
 class LeadController extends Controller
@@ -39,8 +38,8 @@ class LeadController extends Controller
                 $curso = "Indefinido";
             }
             return $curso;
-          })->addColumn('situacao', function ($leads) {
-            if($leads->situacao == 1) {
+        })->addColumn('situacao', function ($leads) {
+            if ($leads->situacao == 1) {
                 $situacao = "Matriculado";
             } elseif ($leads->situacao == 2) {
                 $situacao = "Em Negociacao";
@@ -51,22 +50,22 @@ class LeadController extends Controller
             }
             return $situacao;
 
-          })->addColumn('conheceu', function ($leads) {
+        })->addColumn('conheceu', function ($leads) {
 
             if ($leads->contato == 1) {
                 $conheceu = "Facebook";
             } elseif ($leads->curso == 2) {
                 $conheceu = "Instagram";
-            }elseif ($leads->curso == 3) {
+            } elseif ($leads->curso == 3) {
                 $conheceu = "Eventos";
             } else {
                 $conheceu = "Outros";
             }
             return $conheceu;
-         })->addColumn('unidade', function ($leads) {
+        })->addColumn('unidade', function ($leads) {
             $unidade = $leads->unidade->Nome;
             return $unidade;
-        })->rawColumns(['action', 'curso','unidade','conheceu','situacao'])->make(true);
+        })->rawColumns(['action', 'curso', 'unidade', 'conheceu', 'situacao'])->make(true);
     }
 
     public function edit_lead($id)
@@ -123,5 +122,19 @@ class LeadController extends Controller
         Leads::where("id_lead", "=", $request->id)->update($form_data);
 
         return response()->json(['success' => 'Lead Atualizado com Sucesso']);
+    }
+
+    public function situacaoLead()
+    {
+        $mat = Leads::where('situacao', '=', '1')->get()->count();
+        $des = Leads::where('situacao', '=', '2')->get()->count();
+        $neg = Leads::where('situacao', '=', '3')->get()->count();
+
+        $data = [
+            'matricula' => $mat,
+            'negociado' => $neg,
+            'desistente' => $des,
+        ];
+        return response()->json($data);
     }
 }

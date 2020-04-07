@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Aluno;
+use App\Leads;
 use App\Unidade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -74,7 +75,12 @@ class AlunoController extends Controller
 
     public function funil()
     {
-        return view('funil-vendas');
+        $leads = Leads::all();
+        return view('funil-vendas', [
+            'unidades' => Unidade::All(),
+            'unidade' => Unidade::where('IdUnidade')->first(),
+            'leads' => $leads,
+        ]);
     }
 
     public function leadsExternos()
@@ -86,13 +92,13 @@ class AlunoController extends Controller
     {
         $unidade_id = Auth::user()->unidade_id;
         $tipo = Auth::user()->tipo_unidade;
+        $nivel = Auth::user()->nivel;
 
         $periodo = request("periodo");
         $unidade = request('unidade');
 
         if (request('unidade') !== null || request('periodo') !== null) {
             if (request('unidade') > 0 && request('periodo') === null) {
-                // if ($unidade_id > 0) {
 
                 $alunos = DB::connection('mysql2')
                     ->table('clientes')
@@ -105,7 +111,6 @@ class AlunoController extends Controller
                     ->where('pagamentos_online.unidade_id', '=', $unidade_id)
                     ->get();
 
-                // } else if (request('unidade') === "0" && request('periodo') !== null) {
             } else if (request('unidade') === "0" && request('periodo') !== null) {
                 $datas = explode("-", request('periodo'));
                 $datas[0] = explode("/", trim($datas[0], " "));
@@ -121,7 +126,6 @@ class AlunoController extends Controller
                         'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
                         'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo')
                     ->where('pagamentos_online.pag_status', '=', 2)
-                    ->where('pagamentos_online.unidade_id', '=', $unidade_id)
                     ->whereRaw(DB::raw("DATE(pag_data) between '" . $datas[0] . "' and '" . $datas[1] . "'"))
                     ->get();
 
@@ -163,27 +167,6 @@ class AlunoController extends Controller
                     'periodo' => $periodo,
                 ]
             );
-
-            //    if ($unidade_id > 0) {
-            //         $alunos = DB::connection('mysql2')
-            //             ->table('clientes')
-            //             ->join('pagamentos_online', 'pagamentos_online.cliente_id', 'clientes.id_cliente')
-            //             ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
-            //                 'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
-            //                 'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
-            //                 'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo')
-            //             ->where('pagamentos_online.pag_status', '=', 2)
-            //             ->where('pagamentos_online.unidade_id', '=', $unidade_id)
-            //             ->get();
-
-            //     //     return view(
-            //     //         'vendas-online',
-            //     //         [
-            //     //             'alunos' => $alunos,
-            //     //             'unidades' => Unidade::All(),
-            //     //             'unidade' => Unidade::where('IdUnidade', $unidade)->first(),
-            //     //             'periodo' => $periodo,
-            //     //         ]);
 
             if (request('unidade') == 0 || request('periodo') !== null) {
                 // if (request('unidade') == 0 && request('periodo') === null) {
@@ -249,37 +232,6 @@ class AlunoController extends Controller
 
             }
         }
-        //     return view(
-        //         'vendas-online',
-        //         [
-        //             'alunos' => [],
-        //             'unidades' => Unidade::All(),
-        //             'unidade' => Unidade::where('IdUnidade', $unidade)->first(),
-        //             'periodo' => $periodo,
-        //         ]
-        //     );
-        // }
-        //     // $alunos = DB::connection('mysql2')
-        //     //     ->table('clientes')
-        //     //     ->join('pagamentos_online', 'pagamentos_online.cliente_id', 'clientes.id_cliente')
-        //     //     ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
-        //     //         'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
-        //     //         'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
-        //     //         'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo')
-        //     //     ->where('pagamentos_online.pag_status', '=', 2)
-        //     //     ->whereRaw(DB::raw("DATE(pag_data) between '" . $datas[0] . "' and '" . $datas[1] . "'"))
-        //     //     ->get();
-        //     // // $unidades = Unidade::all();
-        //     // // return view('vendas-online', compact('alunos', 'unidades'));
-
-        //     // return view(
-        //     //     'vendas-online',
-        //     //     [
-        //     //         'alunos' => $alunos,
-        //     //         'unidades' => Unidade::All(),
-        //     //         'unidade' => Unidade::where('IdUnidade', $unidade)->first(),
-        //     //         'periodo' => $periodo,
-        //     //     ]);
     }
     public function leads()
     {

@@ -40,6 +40,8 @@ Route::post('/alunos-ativos-inativos', 'GraficosController@GetAlunosAtivosInativ
 Route::get('/frm-faturamento-receita-despesa', 'GraficosController@FrmReceitasDespesas')->name('frm-faturamento-receita-despesa');
 Route::post('/faturamento-receita-despesa', 'GraficosController@GetReceitasDespesas')->name('faturamento-receita-despesa');
 
+Route::get('/situacao-lead', 'LeadController@situacaoLead')->name('situacao-lead');
+
 /*reports*/
 Route::get('/report-alunos', 'AlunoController@index')->name('report-alunos');
 Route::get('/report-vendas', 'AlunoController@vendasOnline')->name('report-vendas');
@@ -53,6 +55,7 @@ Route::get('/alunos_leads_externos', 'LeadController@listaLeads')->name('alunos_
 Route::get('/report-turmas', 'TurmaController@index')->name('report-turmas');
 Route::post('/report-turmas', 'TurmaController@index')->name('report-turmas');
 Route::get('/report-funil-vendas', 'AlunoController@funil')->name('report-funil-vendas');
+Route::post('/report-funil-vendas', 'AlunoController@funil')->name('report-funil-vendas');
 Route::get('/report-leads-externos', 'LeadController@index')->name('report-leads-externos');
 Route::get('/report-fatanalitico', 'FaturamentoAnaliticoController@index')->name('report-fatanalitico');
 Route::post('/report-fatanalitico', 'FaturamentoAnaliticoController@index')->name('report-fatanalitico');
