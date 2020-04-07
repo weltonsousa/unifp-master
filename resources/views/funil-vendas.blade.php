@@ -32,12 +32,29 @@
                 </div>
                 <div class="x_content">
                     <form class="form-horizontal form-label-left input_mask" action="" method="post">
-                        @csrf                        
+                        @csrf
                         <div class="form-group">
                             <label class="control-label col-md-4 col-sm-2 col-xs-12">Unidade:</label>
                             <div>
-                                <select class="form-control" name="unidade" style="width: 300px;">
-                                    <option value="0">Todas</option>                                                                       <option value="118">Imugi Arapiraca</option>
+                              <select class="form-control" name="unidade" style="width: 300px;">
+                                    <option value="0">Todas</option>
+                                    @if($unidade == null)
+                                        <option value="0" selected>Todas</option>
+                                    @else
+                                        <option value="0">Todas</option>
+                                    @endif
+                                    @foreach ($unidades as $un)
+                                        {{-- @if(count($unidade) > 0) --}}
+                                        @if( is_array($unidade) ? count($unidade[$unidade->IdUnidade]) : 0 )
+                                            @if($un->IdUnidade == $unidade->IdUnidade)
+                                                <option value="{{$un->IdUnidade}}" selected>{{$un->Nome}}</option>
+                                            @else
+                                                <option value="{{$un->IdUnidade}}">{{$un->Nome}}</option>
+                                            @endif
+                                        @else
+                                            <option value="{{$un->IdUnidade}}">{{$un->Nome}}</option>
+                                        @endif
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -87,9 +104,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+                             @foreach ($leads as $lead)
+                                <tr>
+                                <td> {{$lead->nome}}</td>
+                                <td> {{$lead->email}}</td>
+                                <td> {{$lead->telefone}}</td>
+                                <td>
+                                        @if ($lead->curso == 25)
+                                            Animaki
+                                        @else
+                                            Indefinido
+                                        @endif
+                                </td>
+                                <td>
+                                    @if ($lead->situacao == 1)
+                                    Matriculado
+                                @elseif( $lead->situacao == 2)
+                                    Em Negociacao
+                                @else
+                                    Desistiu
+                                @endif
+                                </td>
+                                <td> {{$lead->unidade->Nome}}</td>
+                                <td> {{ date('d/m/Y',  strtotime($lead->created_at))}}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
-
                      </table>
                 </div>
             </div>
@@ -118,7 +158,7 @@
     <script src="{{URL::asset('assets/datatables.net-keytable/js/dataTables.keyTable.min.js')}}"></script>
     <script src="{{URL::asset('assets/datatables.net-responsive-bs/js/responsive.bootstrap.js')}}"></script>
     <script src="{{URL::asset('assets/datatables.net-scroller/js/dataTables.scroller.min.js')}}"></script>
-    
+
     <!-- FastClick -->
     <script src="{{URL::asset('assets/fastclick/lib/fastclick.js')}}"></script>
 
@@ -151,5 +191,5 @@
     <!-- bootstrap-daterangepicker -->
     <script src="{{URL::asset('assets/moment/min/moment.min.js')}}"></script>
     <script src="{{URL::asset('assets/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
-   
+
 @endsection
