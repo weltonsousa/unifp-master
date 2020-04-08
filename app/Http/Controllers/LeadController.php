@@ -30,14 +30,19 @@ class LeadController extends Controller
             $alunos = DB::connection('mysql2')
                 ->table('clientes')
                 ->join('pagamentos_online', 'pagamentos_online.cliente_id', 'clientes.id_cliente')
-                ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
-                    'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
-                    'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
-<<<<<<< HEAD
-                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id', 'pagamentos_online.pag_id')
-=======
-                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id','pagamentos_online.pag_id','pagamentos_online.und_destino')
->>>>>>> d4ef74cead5e610a161e1374a016db7b3be90a50
+                ->select('clientes.nome',
+                    'clientes.email',
+                    'pagamentos_online.pag_cpf_cnpj',
+                    'pagamentos_online.pag_status',
+                    'pagamentos_online.pag_data',
+                    'pagamentos_online.pag_produto',
+                    'pagamentos_online.pag_valor',
+                    'pagamentos_online.pag_telefone',
+                    'pagamentos_online.unidade_id',
+                    'pagamentos_online.pag_tipo',
+                    'pagamentos_online.cliente_id',
+                    'pagamentos_online.pag_id',
+                    'pagamentos_online.und_destino')
                 ->where('pagamentos_online.pag_status', '<>', 2)
                 ->where('pagamentos_online.pag_codigo', '=', null)
                 ->where('pagamentos_online.unidade_id', '=', $unidade_id)
@@ -49,11 +54,7 @@ class LeadController extends Controller
                 ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
                     'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
                     'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
-<<<<<<< HEAD
-                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id', 'pagamentos_online.pag_id')
-=======
-                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id','pagamentos_online.pag_id','pagamentos_online.und_destino')
->>>>>>> d4ef74cead5e610a161e1374a016db7b3be90a50
+                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id', 'pagamentos_online.pag_id', 'pagamentos_online.und_destino')
                 ->where('pagamentos_online.pag_status', '<>', 2)
                 ->where('pagamentos_online.pag_codigo', '=', null)
                 ->where('pagamentos_online.unidade_id', '=', 0)
@@ -65,18 +66,14 @@ class LeadController extends Controller
                 ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
                     'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
                     'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
-<<<<<<< HEAD
-                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id', 'pagamentos_online.pag_id')
-=======
-                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id','pagamentos_online.pag_id','pagamentos_online.und_destino')
->>>>>>> d4ef74cead5e610a161e1374a016db7b3be90a50
+                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id', 'pagamentos_online.pag_id', 'pagamentos_online.und_destino')
                 ->where('pagamentos_online.pag_status', '<>', 2)
                 ->where('pagamentos_online.pag_codigo', '=', null)
                 ->get();
         }
 
         return Datatables::of($alunos)->addColumn('action', function ($alunos) {
-            
+
             if ($alunos->und_destino != "") {
                 $button = '<button type="button"  class="btn btn-success btn-md"> <i class="fa fa-check"></i> Encaminhado </button>';
             } else {
@@ -202,7 +199,7 @@ class LeadController extends Controller
 
         $rules = array(
             'email' => 'required|unique:leads',
-            'telefone' => 'required|unique:leads'
+            'telefone' => 'required|unique:leads',
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -220,7 +217,7 @@ class LeadController extends Controller
             'email' => $request->email,
             'curso' => $request->curso,
             'unidade_id' => $request->unidade,
-            'contato' => 0
+            'contato' => 0,
         );
 
         Leads::create($form_lead);

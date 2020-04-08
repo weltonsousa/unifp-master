@@ -55,6 +55,7 @@ Route::get('/alunos_leads_externos', 'LeadController@listaLeads')->name('alunos_
 Route::get('/alunos_leads', 'LeadController@listaAlunosLeads')->name('alunos_leads');
 Route::get('/report-turmas', 'TurmaController@index')->name('report-turmas');
 Route::post('/report-turmas', 'TurmaController@index')->name('report-turmas');
+Route::get('/report-funil-vendas', 'AlunoController@funil')->name('report-funil-vendas');
 Route::post('/report-funil-vendas', 'AlunoController@funil')->name('report-funil-vendas');
 Route::get('/report-leads-externos', 'LeadController@index')->name('report-leads-externos');
 Route::get('/report-fatanalitico', 'FaturamentoAnaliticoController@index')->name('report-fatanalitico');
