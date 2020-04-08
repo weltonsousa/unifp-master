@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Leads;
-use App\Unidade;
 use App\PagamentoOnline;
+use App\Unidade;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Yajra\Datatables\Datatables;
-use DB;
 
 class LeadController extends Controller
 {
@@ -33,7 +33,7 @@ class LeadController extends Controller
                 ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
                     'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
                     'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
-                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id','pagamentos_online.pag_id')
+                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id', 'pagamentos_online.pag_id')
                 ->where('pagamentos_online.pag_status', '<>', 2)
                 ->where('pagamentos_online.pag_codigo', '=', null)
                 ->where('pagamentos_online.unidade_id', '=', $unidade_id)
@@ -45,7 +45,7 @@ class LeadController extends Controller
                 ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
                     'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
                     'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
-                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id','pagamentos_online.pag_id')
+                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id', 'pagamentos_online.pag_id')
                 ->where('pagamentos_online.pag_status', '<>', 2)
                 ->where('pagamentos_online.pag_codigo', '=', null)
                 ->where('pagamentos_online.unidade_id', '=', 0)
@@ -57,12 +57,12 @@ class LeadController extends Controller
                 ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
                     'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
                     'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
-                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id','pagamentos_online.pag_id')
+                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id', 'pagamentos_online.pag_id')
                 ->where('pagamentos_online.pag_status', '<>', 2)
                 ->where('pagamentos_online.pag_codigo', '=', null)
                 ->get();
         }
-        
+
         return Datatables::of($alunos)->addColumn('action', function ($alunos) {
             $button = '<button type="button" name="edit_lead_aluno" data-id="' . $alunos->pag_id . '" class="edit_lead_aluno btn btn-success btn-md"> <i class="fa fa-external-link"></i> Enviar </button>';
             return $button;
