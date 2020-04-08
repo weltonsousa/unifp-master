@@ -33,7 +33,11 @@ class LeadController extends Controller
                 ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
                     'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
                     'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
+<<<<<<< HEAD
                     'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id', 'pagamentos_online.pag_id')
+=======
+                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id','pagamentos_online.pag_id','pagamentos_online.und_destino')
+>>>>>>> d4ef74cead5e610a161e1374a016db7b3be90a50
                 ->where('pagamentos_online.pag_status', '<>', 2)
                 ->where('pagamentos_online.pag_codigo', '=', null)
                 ->where('pagamentos_online.unidade_id', '=', $unidade_id)
@@ -45,7 +49,11 @@ class LeadController extends Controller
                 ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
                     'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
                     'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
+<<<<<<< HEAD
                     'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id', 'pagamentos_online.pag_id')
+=======
+                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id','pagamentos_online.pag_id','pagamentos_online.und_destino')
+>>>>>>> d4ef74cead5e610a161e1374a016db7b3be90a50
                 ->where('pagamentos_online.pag_status', '<>', 2)
                 ->where('pagamentos_online.pag_codigo', '=', null)
                 ->where('pagamentos_online.unidade_id', '=', 0)
@@ -57,14 +65,23 @@ class LeadController extends Controller
                 ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
                     'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
                     'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
+<<<<<<< HEAD
                     'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id', 'pagamentos_online.pag_id')
+=======
+                    'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo', 'pagamentos_online.cliente_id','pagamentos_online.pag_id','pagamentos_online.und_destino')
+>>>>>>> d4ef74cead5e610a161e1374a016db7b3be90a50
                 ->where('pagamentos_online.pag_status', '<>', 2)
                 ->where('pagamentos_online.pag_codigo', '=', null)
                 ->get();
         }
 
         return Datatables::of($alunos)->addColumn('action', function ($alunos) {
-            $button = '<button type="button" name="edit_lead_aluno" data-id="' . $alunos->pag_id . '" class="edit_lead_aluno btn btn-success btn-md"> <i class="fa fa-external-link"></i> Enviar </button>';
+            
+            if ($alunos->und_destino != "") {
+                $button = '<button type="button"  class="btn btn-success btn-md"> <i class="fa fa-check"></i> Encaminhado </button>';
+            } else {
+                $button = '<button type="button" name="edit_lead_aluno" data-id="' . $alunos->pag_id . '" class="edit_lead_aluno btn btn-primary btn-md"> <i class="fa fa-external-link"></i> Encaminhar </button>';
+            }
             return $button;
 
         })->rawColumns(['action'])->make(true);
@@ -176,6 +193,38 @@ class LeadController extends Controller
         );
 
         Leads::where("id_lead", "=", $request->id)->update($form_data);
+
+        return response()->json(['success' => 'Lead Atualizado com Sucesso']);
+    }
+
+    public function update_aluno(Request $request)
+    {
+
+        $rules = array(
+            'email' => 'required|unique:leads',
+            'telefone' => 'required|unique:leads'
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if ($error->fails()) {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        $form_data = array(
+            'und_destino' => $request->unidade,
+        );
+
+        $form_lead = array(
+            'nome' => $request->nome,
+            'email' => $request->email,
+            'curso' => $request->curso,
+            'unidade_id' => $request->unidade,
+            'contato' => 0
+        );
+
+        Leads::create($form_lead);
+        PagamentoOnline::where("pag_id", "=", $request->id)->update($form_data);
 
         return response()->json(['success' => 'Lead Atualizado com Sucesso']);
     }

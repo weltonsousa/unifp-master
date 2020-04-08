@@ -29,12 +29,13 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content" style=" height:100vh;">
-                    <form class="form-horizontal form-label-left" id="inserir-lead" method="POST">
+                    <form class="form-horizontal form-label-left" id="inserir-lead-aluno" method="POST">
                     @csrf
                         <div class="form-group">
                             <div>
                                 <label for=""> Nome  </label>
                                 <input type="text" class="form-control" readonly id="nome" name="nome">
+                                <input type="hidden" class="form-control" readonly id="id" name="id">
                             </div>
                         </div>
                         <div class="form-group">
@@ -93,6 +94,7 @@
                                 <th>Tentativa Pagamento</th>
                                 <th>Data Tentativa</th>
                                 <th>Unidade</th>
+                                <th>Unidade Destino</th>
                                <th>
                                  Encaminhar
                                 </th> 

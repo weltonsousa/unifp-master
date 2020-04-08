@@ -49,6 +49,7 @@ $(document).on('click', '.edit_lead_aluno', function(){
             $('#email').val(html.data.pag_email);
             $('#curso').val(html.data.pag_produto);
             $('#telefone').val(html.data.pag_telefone);
+            $('#id').val(html.data.pag_id);
             $("#lead-aluno-panel").toggle("slow");
          
         }
@@ -136,6 +137,7 @@ $(function () {
                 {data: 'pag_tipo', name: 'pag_tipo'}, 
                 {data: 'pag_data', name: 'pag_data'}, 
                 {data: 'unidade_id', name: 'unidade_id'}, 
+                {data: 'und_destino', name: 'und_destino'}, 
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ],
             "language": {
@@ -260,3 +262,48 @@ $(function () {
         }
        });
     });
+
+    $('#inserir-lead-aluno').on('submit', function(event){
+        event.preventDefault();
+         /* editar */
+        if($('#action_lead_aluno').val() == "editar")
+        {
+          
+        $.ajax({
+          url:"leads_alunos_externos/update",
+          method:"POST",
+          data:new FormData(this),
+          contentType: false,
+          cache: false,
+          processData: false,
+          dataType:"json",
+          success:function(data)
+          {
+           var html = '';
+           if(data.errors)
+           {
+            html = '<div class="panel panel-primary alerta" width="100%"><div class="panel-heading"> Opss Campos Obrigatorios </div> <div class="panel-body">';
+            for(var count = 0; count < data.errors.length; count++)
+            {
+            html += '<p> * ' + data.errors[count] + '</p>';
+            }
+            html += '</div></div>';
+           }
+           if(data.success)
+           {
+            html = '<div class="panel panel-success sucesso" width="100%"><div class="panel-heading"> Sucesso </div> <div class="panel-body">' + data.success + '</div></div>';
+            $('#leads').DataTable().ajax.reload();
+       
+           }
+            $('#form_result').html(html);
+            setTimeout(function() { 
+                $('#form_result').fadeOut("slow");
+                $('#action_lead_aluno').html("<i class='fa fa-check'></i> Encaminhar").attr("disabled", false);
+            }, 6000);
+             $('#form_result').show("slow");
+             $('#action_lead_aluno').html("processando...").attr("disabled", true);
+
+            }
+         });
+        }
+       });
