@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4 col-sm-4 col-xs-4 hidden-panel animated"  id="lead-aluno-panel" style="position:fixed; top:0; right:0; z-index:100; float:right;">
+    <div class="col-md-4 col-sm-4 col-xs-4 hidden-panel animated"  id="lead-aluno-panel" style="position:absolute; padding:0!important; height: 100vh;  top:0; right:0; z-index:100; float:right;">
     <div class="x_panel">
     <button class="btn btn-default pull-right fechar"><i class="fa fa-close"></i></button>
                 <div class="x_title">
