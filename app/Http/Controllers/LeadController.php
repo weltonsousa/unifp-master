@@ -86,50 +86,18 @@ class LeadController extends Controller
 
     public function listaLeads()
     {
-        $leads = Leads::all();
+        $leads = PagamentoOnline::all();
 
         return Datatables::of($leads)->addColumn('action', function ($lead) {
-            $button = '<button type="button" name="edit_lead" data-id="' . $lead->id_lead . '" class="edit_lead btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
+            if ($lead->und_destino != "" && $lead->unidade_id == 0) {
+                $button = '<button type="button"  class="btn btn-success btn-md"> <i class="fa fa-check"></i> Encaminhado </button>';
+            } else {
+                $button = '<button type="button" name="encaminhar_aluno" data-id="' . $lead->pag_id . '" class="encaminhar_aluno btn btn-primary btn-md"> <i class="fa fa-external-link"></i> Encaminhar </button>';
+            }
+            $button .= '<button type="button" name="edit_situacao" data-id="' . $lead->pag_id. '" class="edit_situacao btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
             return $button;
 
-        })->addColumn('curso', function ($leads) {
-
-            if ($leads->curso == 1) {
-                $curso = "Escultura Tradicional";
-            } elseif ($leads->curso == 25) {
-                $curso = "Animaky";
-            } else {
-                $curso = "Indefinido";
-            }
-            return $curso;
-        })->addColumn('situacao', function ($leads) {
-            if ($leads->situacao == 1) {
-                $situacao = "Matriculado";
-            } elseif ($leads->situacao == 2) {
-                $situacao = "Em Negociacao";
-            } elseif ($leads->situacao == 3) {
-                $situacao = "Desistiu";
-            } else {
-                $situacao = "Indefinido";
-            }
-            return $situacao;
-
-        })->addColumn('conheceu', function ($leads) {
-
-            if ($leads->contato == 1) {
-                $conheceu = "Facebook";
-            } elseif ($leads->curso == 2) {
-                $conheceu = "Instagram";
-            } elseif ($leads->curso == 3) {
-                $conheceu = "Eventos";
-            } else {
-                $conheceu = "Outros";
-            }
-            return $conheceu;
-        })->addColumn('unidade', function ($leads) {
-            $unidade = $leads->unidade->Nome;
-            return $unidade;
-        })->rawColumns(['action', 'curso', 'unidade', 'conheceu', 'situacao'])->make(true);
+        })->rawColumns(['action'])->make(true);
     }
 
     public function edit_lead($id)
@@ -142,6 +110,14 @@ class LeadController extends Controller
     {
         $data = PagamentoOnline::find($id);
         return response()->json(['data' => $data]);
+    }
+
+    public function matriculados()
+    {
+        $unidade_id = Auth::user()->unidade_id;
+        $unidades = Unidade::all()->where("sophia_id", "=", $unidade_id);
+
+        return view('matriculas', compact("unidades"));
     }
 
     public function store(Request $request)
@@ -159,15 +135,15 @@ class LeadController extends Controller
         }
 
         $form_data = array(
-            'nome' => $request->nome,
-            'email' => $request->email,
-            'telefone' => $request->telefone,
-            'curso' => $request->curso_id,
+            'pag_nome' => $request->nome,
+            'pag_email' => $request->email,
+            'pag_telefone' => $request->telefone,
+            'pag_produto' => $request->curso,
             'unidade_id' => $request->unidade,
-            'contato' => $request->contato,
+            'contato' => 0,
         );
 
-        Leads::create($form_data);
+        PagamentoOnline::create($form_data);
 
         return response()->json(['success' => 'Lead Adicionado com Sucesso.']);
     }
@@ -176,7 +152,32 @@ class LeadController extends Controller
     {
 
         $rules = array(
+            'nome' => 'required',
+            'email' => 'required',
+            'telefone' => 'required',
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if ($error->fails()) {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        $form_data = array(
+            'und_destino' => $request->unidade,
+        );
+
+        PagamentoOnline::where("pag_id", "=", $request->id)->update($form_data);
+
+        return response()->json(['success' => 'Lead Atualizado com Sucesso']);
+    }
+
+    public function status(Request $request)
+    {
+
+        $rules = array(
             'situacao' => 'required',
+            'contato' => 'required',
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -187,9 +188,10 @@ class LeadController extends Controller
 
         $form_data = array(
             'situacao' => $request->situacao,
+            'contato' => $request->contato
         );
 
-        Leads::where("id_lead", "=", $request->id)->update($form_data);
+        PagamentoOnline::where("pag_id", "=", $request->id)->update($form_data);
 
         return response()->json(['success' => 'Lead Atualizado com Sucesso']);
     }

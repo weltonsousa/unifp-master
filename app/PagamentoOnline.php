@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class PagamentoOnline extends Model
 {
     protected $connection = 'mysql2';
+    public $timestamps = false;
 
     protected $fillable = [
-        'pag_id', 'nome', 'email',
+        'pag_id', 'pag_nome', 'pag_email', 'pag_telefone','pag_produto','unidade_id','contato'
     ];
 
     protected $primaryKey = 'pag_id';

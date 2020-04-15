@@ -67,4 +67,6 @@ Route::get('editar_lead_aluno/{id}/edit', 'LeadController@edit_lead_aluno')->nam
 // Remover Leads
 Route::post('/remover', 'AlunoController@remover')->name('remover');
 Route::post('leads_externos/update', 'LeadController@update')->name('leads_externos.update');
+Route::post('status_aluno/update', 'LeadController@status')->name('status_aluno.update');
 Route::post('leads_alunos_externos/update', 'LeadController@update_aluno')->name('leads_externos.update');
+Route::get('/matriculas', 'LeadController@matriculados')->name('matriculas');
