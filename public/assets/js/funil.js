@@ -69,7 +69,7 @@ $(document).on('click', '.edit_situacao', function () {
 
 $(function () {
 
-    var table = $('#matriculados').DataTable({
+    var table = $('#matriculados1').DataTable({
         processing: true,
         serverSide: true,
         ajax: "/alunos_leads_externos",

@@ -12,8 +12,16 @@
     <link href="{{URL::asset('assets/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{URL::asset('assets/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{URL::asset('assets/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
+
 @endsection
 @section('content')
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" > </script>
+          <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js" > </script>
+          <script src = "https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js" > </script>
+          <link rel = "stylesheet" href ="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css"/>
+          <link rel = "stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"> </script>
+
     <div class="">
         <div class="page-title">
             <div class="title_left">
@@ -174,7 +182,7 @@
             <button type="button" id="add-aluno" class="btn btn-primary btn-lg mt-2"> <i class="fa fa-plus"></i> Adicionar Lead Externo</button>
             <br/>
 
-                 <div class="row input-daterange">
+    <div class="row input-daterange">
       <div class="col-md-4" >
           <input type="text" name = "from_date" id = "from_date" class="form-control" placeholder = "Data inicio" readonly/>
         </div>
@@ -214,11 +222,67 @@
             </div>
         </div>
     </div>
+<script>
+    var $j = jQuery.noConflict();
+    $j(document).ready(function () {
+      $j('.input-daterange').datepicker({
+        todayBtn: 'linked',
+        format: 'yyyy-mm-dd',
+        autoclose: true
+      });
+
+  load_data();
+
+  function load_data(from_date = '', to_date = '') {
+    $('#matriculados').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: '/alunos_leads_externos',
+        data: { from_date: from_date, to_date: to_date }
+      },
+      columns: [
+          { data: 'pag_nome', name: 'pag_nome' },
+            { data: 'pag_email', name: 'pag_email' },
+            { data: 'pag_telefone', name: 'pag_telefone' },
+            { data: 'pag_tipo', name: 'pag_tipo' },
+            { data: 'pag_status', name: 'pag_status' },
+            { data: 'pag_data', name: 'pag_data' },
+            { data: 'pag_produto', name: 'pag_produto' },
+            { data: 'situacao', name: 'situacao' },
+            { data: 'contato', name: 'contato' },
+            { data: 'unidade', name: 'unidade' },
+            { data: 'und_destino', name: 'und_destino' },
+            { data: 'action', name: 'action' }
+      ]
+    });
+  }
+
+  $('#filter').click(function () {
+    var from_date = $('#from_date').val();
+    var to_date = $('#to_date').val();
+    if (from_date != '' && to_date != '') {
+      $('#matriculados').DataTable().destroy();
+      load_data(from_date, to_date);
+    }
+    else {
+      alert('Data de inicio é requerido');
+    }
+  });
+
+  $('#refresh').click(function () {
+    $('#from_date').val('');
+    $('#to_date').val('');
+    $('#matriculados').DataTable().destroy();
+    load_data();
+  });
+
+});
+</script>
 
 @endsection
 
 @section('scripts')
-
 
 <script src="{{URL::asset('assets/moment/min/moment.min.js')}}"></script>
     <script src="{{URL::asset('assets/js/funil.js')}}"></script>
