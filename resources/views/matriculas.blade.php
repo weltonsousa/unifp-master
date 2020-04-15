@@ -158,7 +158,7 @@
             <button type="button" id="add-aluno" class="btn btn-primary btn-lg mt-2"> <i class="fa fa-plus"></i> Adicionar Lead Externo</button>
             <br/>
 
-    
+
                 <div class="x_content">
                     <table id="matriculados" class="table table-striped jambo_table bulk_action" width="100%">
                     <thead>
