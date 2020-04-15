@@ -80,7 +80,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group status-lead info ">
+                        <div class="form-group status-lead info">
                             <div>
                                 <label for="">Status Lead </label>
                                 <select class="form-control" name="situacao">
