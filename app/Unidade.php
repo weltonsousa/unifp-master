@@ -32,4 +32,8 @@ class Unidade extends Model
     {
         return $this->belongsTo('App\Leads');
     }
+    public function pagamentoOnline()
+    {
+        return $this->belongsTo('App\PagamentoOnline');
+    }
 }
