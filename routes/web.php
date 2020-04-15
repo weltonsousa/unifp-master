@@ -70,3 +70,5 @@ Route::post('leads_externos/update', 'LeadController@update')->name('leads_exter
 Route::post('status_aluno/update', 'LeadController@status')->name('status_aluno.update');
 Route::post('leads_alunos_externos/update', 'LeadController@update_aluno')->name('leads_externos.update');
 Route::get('/matriculas', 'LeadController@matriculados')->name('matriculas');
+
+Route::resource('daterange', 'DateRangeController');

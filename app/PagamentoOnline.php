@@ -10,7 +10,7 @@ class PagamentoOnline extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'pag_id', 'pag_nome', 'pag_email', 'pag_telefone','pag_produto','unidade_id','contato'
+        'pag_id', 'pag_nome', 'pag_email', 'pag_telefone', 'pag_produto', 'unidade_id', 'contato',
     ];
 
     protected $primaryKey = 'pag_id';
@@ -18,6 +18,6 @@ class PagamentoOnline extends Model
 
     public function unidade()
     {
-        return $this->hasOne('App\Unidade', 'sophia_id', 'unidade_id');
+        return $this->hasOne('App\Unidade', 'idUnidade', 'unidade_id');
     }
 }

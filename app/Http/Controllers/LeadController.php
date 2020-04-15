@@ -86,7 +86,26 @@ class LeadController extends Controller
 
     public function listaLeads()
     {
-        $leads = PagamentoOnline::all();
+        // $leads = PagamentoOnline::all();
+        $leads = DB::connection('mysql2')
+            ->table('unidade')
+            ->join('pagamentos_online', 'pagamentos_online.unidade_id', 'unidade.idUnidade')
+            ->select(
+                'pagamentos_online.pag_nome',
+                'pagamentos_online.pag_email',
+                'pagamentos_online.pag_cpf_cnpj',
+                'pagamentos_online.pag_status',
+                'pagamentos_online.pag_data',
+                'pagamentos_online.pag_data',
+                'pagamentos_online.pag_produto',
+                'pagamentos_online.pag_valor',
+                'pagamentos_online.pag_telefone',
+                'pagamentos_online.unidade_id',
+                'pagamentos_online.pag_tipo',
+                'pagamentos_online.pag_id',
+                'pagamentos_online.und_destino',
+                'unidade.unidade')
+            ->get();
 
         return Datatables::of($leads)->addColumn('action', function ($lead) {
             if ($lead->und_destino != "" && $lead->unidade_id == 0) {
@@ -94,7 +113,7 @@ class LeadController extends Controller
             } else {
                 $button = '<button type="button" name="encaminhar_aluno" data-id="' . $lead->pag_id . '" class="encaminhar_aluno btn btn-primary btn-md"> <i class="fa fa-external-link"></i> Encaminhar </button>';
             }
-            $button .= '<button type="button" name="edit_situacao" data-id="' . $lead->pag_id. '" class="edit_situacao btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
+            $button .= '<button type="button" name="edit_situacao" data-id="' . $lead->pag_id . '" class="edit_situacao btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
             return $button;
 
         })->rawColumns(['action'])->make(true);
@@ -118,6 +137,7 @@ class LeadController extends Controller
         $unidades = Unidade::all()->where("sophia_id", "=", $unidade_id);
 
         return view('matriculas', compact("unidades"));
+
     }
 
     public function store(Request $request)
@@ -188,7 +208,7 @@ class LeadController extends Controller
 
         $form_data = array(
             'situacao' => $request->situacao,
-            'contato' => $request->contato
+            'contato' => $request->contato,
         );
 
         PagamentoOnline::where("pag_id", "=", $request->id)->update($form_data);
