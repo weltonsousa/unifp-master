@@ -120,12 +120,13 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                <div class="row input-daterange">
+                <div class="row">
                 <div class="col-md-4" >
           <select name = "unidade" class="form-control">
-             <option>Selecione unidade</option>
+             <option>Selecione Unidade</option>
           </select>
         </div>
+        <div class="input-daterange">
       <div class="col-md-4" >
           <input type="text" name = "from_date" id = "from_date" class="form-control" placeholder = "Data inicio" readonly/>
         </div>
@@ -137,6 +138,7 @@
               <button type="button" name = "filter" id = "filter" class="btn btn-primary" > <i class="fa fa-filter"></i> Filtrar </button>
               <button type = "button" name = "refresh" id = "refresh" class="btn btn-default" > Limpar </button>
         </div>
+    </div>
           </div>
 
                 </div>
