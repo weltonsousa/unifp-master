@@ -218,7 +218,6 @@
 
 @section('scripts')
 
-
 <script src="{{URL::asset('assets/moment/min/moment.min.js')}}"></script>
     <script src="{{URL::asset('assets/js/funil.js')}}"></script>
     <script src="{{URL::asset('assets/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
