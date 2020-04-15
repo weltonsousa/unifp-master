@@ -84,41 +84,82 @@ class LeadController extends Controller
         })->rawColumns(['action'])->make(true);
     }
 
-    public function listaLeads()
+    public function listaLeads(Request $request)
     {
         // $leads = PagamentoOnline::all();
-        $leads = DB::connection('mysql2')
-            ->table('unidade')
-            ->join('pagamentos_online', 'pagamentos_online.unidade_id', 'unidade.idUnidade')
-            ->select(
-                'pagamentos_online.pag_nome',
-                'pagamentos_online.situacao',
-                'pagamentos_online.pag_email',
-                'pagamentos_online.pag_cpf_cnpj',
-                'pagamentos_online.pag_status',
-                'pagamentos_online.pag_data',
-                'pagamentos_online.pag_data',
-                'pagamentos_online.pag_produto',
-                'pagamentos_online.pag_valor',
-                'pagamentos_online.pag_telefone',
-                'pagamentos_online.unidade_id',
-                'pagamentos_online.pag_tipo',
-                'pagamentos_online.pag_id',
-                'pagamentos_online.und_destino',
-                'pagamentos_online.contato',
-                'unidade.unidade')
-            ->get();
+        if (request()->ajax()) {
+            if (!empty($request->from_date)) {
 
-        return Datatables::of($leads)->addColumn('action', function ($lead) {
-            if ($lead->und_destino != "" && $lead->unidade_id == 0) {
-                $button = '<button type="button"  class="btn btn-success btn-md"> <i class="fa fa-check"></i> Encaminhado </button>';
+                $leads = DB::connection('mysql2')
+                    ->table('unidade')
+                    ->join('pagamentos_online', 'pagamentos_online.unidade_id', 'unidade.idUnidade')
+                    ->select(
+                        'pagamentos_online.pag_nome',
+                        'pagamentos_online.situacao',
+                        'pagamentos_online.pag_email',
+                        'pagamentos_online.pag_cpf_cnpj',
+                        'pagamentos_online.pag_status',
+                        'pagamentos_online.pag_data',
+                        'pagamentos_online.pag_data',
+                        'pagamentos_online.pag_produto',
+                        'pagamentos_online.pag_valor',
+                        'pagamentos_online.pag_telefone',
+                        'pagamentos_online.unidade_id',
+                        'pagamentos_online.pag_tipo',
+                        'pagamentos_online.pag_id',
+                        'pagamentos_online.und_destino',
+                        'pagamentos_online.contato',
+                        'unidade.unidade')
+                    ->whereBetween('pag_data', array($request->from_date, $request->to_date))
+                    ->get();
+
+                return Datatables::of($leads)->addColumn('action', function ($lead) {
+                    if ($lead->und_destino != "" && $lead->unidade_id == 0) {
+                        $button = '<button type="button"  class="btn btn-success btn-md"> <i class="fa fa-check"></i> Encaminhado </button>';
+                    } else {
+                        $button = '<button type="button" name="encaminhar_aluno" data-id="' . $lead->pag_id . '" class="encaminhar_aluno btn btn-primary btn-md"> <i class="fa fa-external-link"></i> Encaminhar </button>';
+                    }
+                    $button .= '<button type="button" name="edit_situacao" data-id="' . $lead->pag_id . '" class="edit_situacao btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
+                    return $button;
+
+                })->rawColumns(['action'])->make(true);
             } else {
-                $button = '<button type="button" name="encaminhar_aluno" data-id="' . $lead->pag_id . '" class="encaminhar_aluno btn btn-primary btn-md"> <i class="fa fa-external-link"></i> Encaminhar </button>';
-            }
-            $button .= '<button type="button" name="edit_situacao" data-id="' . $lead->pag_id . '" class="edit_situacao btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
-            return $button;
 
-        })->rawColumns(['action'])->make(true);
+                $leads = DB::connection('mysql2')
+                    ->table('unidade')
+                    ->join('pagamentos_online', 'pagamentos_online.unidade_id', 'unidade.idUnidade')
+                    ->select(
+                        'pagamentos_online.pag_nome',
+                        'pagamentos_online.situacao',
+                        'pagamentos_online.pag_email',
+                        'pagamentos_online.pag_cpf_cnpj',
+                        'pagamentos_online.pag_status',
+                        'pagamentos_online.pag_data',
+                        'pagamentos_online.pag_data',
+                        'pagamentos_online.pag_produto',
+                        'pagamentos_online.pag_valor',
+                        'pagamentos_online.pag_telefone',
+                        'pagamentos_online.unidade_id',
+                        'pagamentos_online.pag_tipo',
+                        'pagamentos_online.pag_id',
+                        'pagamentos_online.und_destino',
+                        'pagamentos_online.contato',
+                        'unidade.unidade')
+                    ->get();
+
+                return Datatables::of($leads)->addColumn('action', function ($lead) {
+                    if ($lead->und_destino != "" && $lead->unidade_id == 0) {
+                        $button = '<button type="button"  class="btn btn-success btn-md"> <i class="fa fa-check"></i> Encaminhado </button>';
+                    } else {
+                        $button = '<button type="button" name="encaminhar_aluno" data-id="' . $lead->pag_id . '" class="encaminhar_aluno btn btn-primary btn-md"> <i class="fa fa-external-link"></i> Encaminhar </button>';
+                    }
+                    $button .= '<button type="button" name="edit_situacao" data-id="' . $lead->pag_id . '" class="edit_situacao btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
+                    return $button;
+
+                })->rawColumns(['action'])->make(true);
+
+            }
+        }
     }
 
     public function edit_lead($id)
