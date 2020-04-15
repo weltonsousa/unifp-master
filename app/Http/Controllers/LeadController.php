@@ -92,6 +92,7 @@ class LeadController extends Controller
             ->join('pagamentos_online', 'pagamentos_online.unidade_id', 'unidade.idUnidade')
             ->select(
                 'pagamentos_online.pag_nome',
+                'pagamentos_online.situacao',
                 'pagamentos_online.pag_email',
                 'pagamentos_online.pag_cpf_cnpj',
                 'pagamentos_online.pag_status',
@@ -104,6 +105,7 @@ class LeadController extends Controller
                 'pagamentos_online.pag_tipo',
                 'pagamentos_online.pag_id',
                 'pagamentos_online.und_destino',
+                'pagamentos_online.contato',
                 'unidade.unidade')
             ->get();
 

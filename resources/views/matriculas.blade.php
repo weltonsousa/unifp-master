@@ -120,49 +120,25 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                 <form class="form-horizontal form-label-left input_mask" action="{{route('matriculas')}}" method="post">
-                        @csrf
-                        <div class="form-group">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Unidade:</label>
-                            <div>
-                                <select class="form-control" name="unidade" style="width: 300px;">
-                                    <option value="0">Todas</option>
-                                    @if($unidade == null)
-                                        <option value="0" selected>Todas</option>
-                                    @else
-                                        <option value="0">Todas</option>
-                                    @endif
-                                    @foreach ($unidades as $un)
-                                        {{-- @if(count($unidade) > 0) --}}
-                                        @if( is_array($unidade) ? count($unidade[$unidade->IdUnidade]) : 0 )
-                                            @if($un->IdUnidade == $unidade->IdUnidade)
-                                                <option value="{{$un->IdUnidade}}" selected>{{$un->Nome}}</option>
-                                            @else
-                                                <option value="{{$un->IdUnidade}}">{{$un->Nome}}</option>
-                                            @endif
-                                        @else
-                                            <option value="{{$un->IdUnidade}}">{{$un->Nome}}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Período de matricula:</label>
-                            <div class="controls">
-                                <div class="input-prepend input-group">
-                                    <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                    <input type="text" style="width: 260px" name="periodo" id="reservation" class="form-control" value="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ln_solid"></div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2">
-                                <button id="send" type="submit" class="btn btn-success"> <i class="fa fa-search"></i> Buscar</button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="row input-daterange">
+                <div class="col-md-4" >
+          <select name = "unidade" class="form-control">
+             <option>Selecione unidade</option>
+          </select>
+        </div>
+      <div class="col-md-4" >
+          <input type="text" name = "from_date" id = "from_date" class="form-control" placeholder = "Data inicio" readonly/>
+        </div>
+      <div class="col-md-4" >
+           <input type="text" name = "to_date" id = "to_date" class="form-control" placeholder = "Data fim" readonly/>
+         </div>
+      <div class="col-md-4">
+      <br>
+              <button type="button" name = "filter" id = "filter" class="btn btn-primary" > <i class="fa fa-filter"></i> Filtrar </button>
+              <button type = "button" name = "refresh" id = "refresh" class="btn btn-default" > Limpar </button>
+        </div>
+          </div>
+
                 </div>
             </div>
         </div>
@@ -182,19 +158,7 @@
             <button type="button" id="add-aluno" class="btn btn-primary btn-lg mt-2"> <i class="fa fa-plus"></i> Adicionar Lead Externo</button>
             <br/>
 
-    <div class="row input-daterange">
-      <div class="col-md-4" >
-          <input type="text" name = "from_date" id = "from_date" class="form-control" placeholder = "Data inicio" readonly/>
-        </div>
-      <div class="col-md-4" >
-           <input type="text" name = "to_date" id = "to_date" class="form-control" placeholder = "Data fim" readonly/>
-         </div>
-      <div class="col-md-4" >
-              <button type="button" name = "filter" id = "filter" class="btn btn-primary" > Filtro </button>
-              <button type = "button" name = "refresh" id = "refresh" class="btn btn-default" > Limpar </button>
-        </div>
-          </div>
-
+    
                 <div class="x_content">
                     <table id="matriculados" class="table table-striped jambo_table bulk_action" width="100%">
                     <thead>
