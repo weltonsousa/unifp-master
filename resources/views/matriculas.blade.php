@@ -20,8 +20,8 @@
           <script src="{{URL::asset('assets/filter/jquery.dataTables.min.js')}}" > </script>
           <script src="{{URL::asset('assets/filter/dataTables.bootstrap.min.js')}}"> </script>
           <script src="{{URL::asset('assets/filter/bootstrap-datepicker.js')}}"> </script>
-          <link rel="stylesheet" href="{{URL::asset('assets/filter/css/dataTables.bootstrap.min.css')}}"/>
-          <link rel="stylesheet" href ="{{URL::asset('assests/filter/bootstrap-datepicker.css')}}"/>
+          <link href="{{URL::asset('assets/filter/dataTables.bootstrap.min.css')}}" rel="stylesheet">
+          <link href ="{{URL::asset('assets/filter/bootstrap-datepicker.css')}}" rel="stylesheet">
 
     <div class="">
         <div class="page-title">
