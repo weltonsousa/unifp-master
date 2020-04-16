@@ -112,17 +112,6 @@ class LeadController extends Controller
                         'unidade.unidade')
                     ->whereBetween('pag_data', array($request->from_date, $request->to_date))
                     ->get();
-
-                return Datatables::of($leads)->addColumn('action', function ($lead) {
-                    if ($lead->und_destino != "" && $lead->unidade_id == 0) {
-                        $button = '<button type="button"  class="btn btn-success btn-md"> <i class="fa fa-check"></i> Encaminhado </button>';
-                    } else {
-                        $button = '<button type="button" name="encaminhar_aluno" data-id="' . $lead->pag_id . '" class="encaminhar_aluno btn btn-primary btn-md"> <i class="fa fa-external-link"></i> Encaminhar </button>';
-                    }
-                    $button .= '<button type="button" name="edit_situacao" data-id="' . $lead->pag_id . '" class="edit_situacao btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
-                    return $button;
-
-                })->rawColumns(['action'])->make(true);
             } else {
 
                 $leads = DB::connection('mysql2')
@@ -148,7 +137,7 @@ class LeadController extends Controller
                     ->get();
 
                 return Datatables::of($leads)->addColumn('action', function ($lead) {
-                    if ($lead->und_destino != "" && $lead->unidade_id == 0) {
+                    if ($lead->und_destino != "" || $lead->und_destino == "0") {
                         $button = '<button type="button"  class="btn btn-success btn-md"> <i class="fa fa-check"></i> Encaminhado </button>';
                     } else {
                         $button = '<button type="button" name="encaminhar_aluno" data-id="' . $lead->pag_id . '" class="encaminhar_aluno btn btn-primary btn-md"> <i class="fa fa-external-link"></i> Encaminhar </button>';
@@ -156,7 +145,63 @@ class LeadController extends Controller
                     $button .= '<button type="button" name="edit_situacao" data-id="' . $lead->pag_id . '" class="edit_situacao btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
                     return $button;
 
-                })->rawColumns(['action'])->make(true);
+                })->addColumn('formapgto', function ($lead) {
+                    if ($lead->pag_tipo =="boleto"){
+                        $formaPagamento = "Boleto";
+                    }else if($lead->pag_tipo =="cartao"){
+                        $formaPagamento = "Cartão";
+                    }else{
+                        $formaPagamento = "Indefinido"; 
+                    }
+                    return $formaPagamento;
+                
+                })->addColumn('tipo', function ($lead) {
+                    if ($lead->pag_status ==0){
+                        $status = "Processando";
+                    }else if($lead->pag_status ==2){
+                        $status = "Pago";
+                    }else{
+                        $status = "Indefinido"; 
+                    }
+                    return $status;
+
+                })->addColumn('situacaoaluno', function ($lead) {
+                    if ($lead->situacao ==1){
+                        $staluno = "Matriculado";
+                    }else if($lead->situacao ==2){
+                        $staluno = "Em Negociação";
+                    }else if($lead->situacao ==3){
+                        $staluno = "Desistiu"; 
+                    }else{
+                        $staluno = "Indefinido"; 
+                    }
+                    return $staluno;
+
+                })->addColumn('conheceu', function ($lead) {
+                    if ($lead->contato ==0){
+                        $contato = "Site";
+                    }else if($lead->situacao ==1){
+                        $contato = "Facebook";
+                    }else if($lead->situacao ==2){
+                        $contato = "Instagram"; 
+                    }else if($lead->situacao ==3){
+                        $contato = "Eventos"; 
+                    }else{
+                        $contato = "Outros"; 
+                    }
+                    return $contato;
+
+                })->addColumn('destino', function ($lead) {
+                    if ($lead->und_destino ==""){
+                        $destino = "Indefinido";
+                    }else{
+                        $dest = DB::connection('mysql2')->table('unidade')
+                        ->select('unidade')->where('codUnidade', '=', $lead->und_destino)->pluck('unidade');
+                       $destino = $dest[0];
+                    }
+                    return $destino;
+
+                })->rawColumns(['action','formapgto','tipo','situacaoaluno','conheceu','destino'])->make(true);
 
             }
         }

@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4 col-sm-4 col-xs-4 hidden-panel animated"  id="matriculas-panel" style="position:absolute; padding:0!important; height: 100vh;  top:0; right:0; z-index:100; float:right;">
+    <div class="col-md-4 col-sm-4 col-xs-4 hidden-panel animated"  id="matriculas-panel" style="position:absolute; padding:0!important; height: 100vh!important;  top:0; right:0; z-index:100;">
     <div class="x_panel">
     <button class="btn btn-default pull-right fechar"><i class="fa fa-close"></i></button>
                 <div class="x_title">
@@ -211,14 +211,14 @@
           { data: 'pag_nome', name: 'pag_nome' },
             { data: 'pag_email', name: 'pag_email' },
             { data: 'pag_telefone', name: 'pag_telefone' },
-            { data: 'pag_tipo', name: 'pag_tipo' },
-            { data: 'pag_status', name: 'pag_status' },
+            { data: 'formapgto', name: 'formapgto' },
+            { data: 'tipo', name: 'tipo' },
             { data: 'pag_data', name: 'pag_data' },
             { data: 'pag_produto', name: 'pag_produto' },
-            { data: 'situacao', name: 'situacao' },
-            { data: 'contato', name: 'contato' },
+            { data: 'situacaoaluno', name: 'situacaoaluno' },
+            { data: 'conheceu', name: 'conheceu' },
             { data: 'unidade', name: 'unidade' },
-            { data: 'und_destino', name: 'und_destino' },
+            { data: 'destino', name: 'destino' },
             { data: 'action', name: 'action' }
       ],
         "language": {
