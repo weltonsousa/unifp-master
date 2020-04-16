@@ -115,7 +115,7 @@
 
     <div class="row">
        <div class="col-md-6 col-sm-10 col-xs-6">
-            <div class="x_panel" style="height:260px!important;">
+            <div class="x_panel" style="height:265px!important;">
                 <div class="x_title">
                     <h2>Filtros<small>faça uma busca para encontrar resultados.</small></h2>
                     <div class="clearfix"></div>
@@ -203,7 +203,7 @@
             </div>
         </div>
         </div>
-        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
             <div class="x_panel">
             <button type="button" id="add-aluno" class="btn btn-primary btn-lg mt-2"> <i class="fa fa-plus"></i> Adicionar Lead Externo</button>
             <br/>
