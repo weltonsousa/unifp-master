@@ -54,7 +54,7 @@
                             <div class="menu_section">
                                 <h3>General</h3>
                                 <ul class="nav side-menu">
-                                   @if(Auth::user()->nivel == 0)
+                                   @if ( Auth::user()->tipo_unidade == 1 )
                                        @include("layouts.menus.master");
                                    @else
                                         @include("layouts.menus.online");

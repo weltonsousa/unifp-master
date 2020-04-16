@@ -21,7 +21,7 @@
           <script src="{{URL::asset('assets/filter/dataTables.bootstrap.min.js')}}"> </script>
           <script src="{{URL::asset('assets/filter/bootstrap-datepicker.js')}}"> </script>
           <link href="{{URL::asset('assets/filter/dataTables.bootstrap.min.css')}}" rel="stylesheet">
-          <link href ="{{URL::asset('assets/filter/bootstrap-datepicker.css')}}" rel="stylesheet">
+          <link href="{{URL::asset('assets/filter/bootstrap-datepicker.css')}}" rel="stylesheet">
 
     <div class="">
         <div class="page-title">
@@ -177,20 +177,20 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <p><i class="fa fa-square blue"></i>Matriculado </p>
+                                                <p><i class="fa fa-square green"></i>Matriculado </p>
                                             </td>
                                         <td>{{ number_format($resultados[0],2)}} %
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <p><i class="fa fa-square purple"></i>Desistiu </p>
+                                                <p><i class="fa fa-square"></i>Desistiu </p>
                                             </td>
                                             <td>{{ number_format($resultados[1], 2)}} %</td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <p><i class="fa fa-square green"></i>Em Negociação </p>
+                                                <p><i class="fa fa-square blue"></i>Em Negociação </p>
                                             </td>
                                             <td>{{ number_format($resultados[2],2)}} %</td>
                                         </tr>
