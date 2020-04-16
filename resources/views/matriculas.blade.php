@@ -15,12 +15,13 @@
 
 @endsection
 @section('content')
-        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" > </script>
-          <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js" > </script>
-          <script src = "https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js" > </script>
-          <link rel = "stylesheet" href ="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css"/>
-          <link rel = "stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"> </script>
+    <!--filter tables -->
+          <script src="{{URL::asset('assets/filter/jquery.min.js')}}"></script>
+          <script src="{{URL::asset('assets/filter/jquery.dataTables.min.js')}}" > </script>
+          <script src="{{URL::asset('assets/filter/dataTables.bootstrap.min.js')}}"> </script>
+          <script src="{{URL::asset('assets/filter/bootstrap-datepicker.js')}}"> </script>
+          <link rel="stylesheet" href="{{URL::asset('assets/filter/css/dataTables.bootstrap.min.css')}}"/>
+          <link rel="stylesheet" href ="{{URL::asset('assests/filter/bootstrap-datepicker.css')}}"/>
 
     <div class="">
         <div class="page-title">

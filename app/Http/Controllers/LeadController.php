@@ -112,6 +112,74 @@ class LeadController extends Controller
                         'unidade.unidade')
                     ->whereBetween('pag_data', array($request->from_date, $request->to_date))
                     ->get();
+
+                return Datatables::of($leads)->addColumn('action', function ($lead) {
+                    if ($lead->und_destino != "" || $lead->und_destino == "0") {
+                        $button = '<button type="button"  class="btn btn-success btn-md"> <i class="fa fa-check"></i> Encaminhado </button>';
+                    } else {
+                        $button = '<button type="button" name="encaminhar_aluno" data-id="' . $lead->pag_id . '" class="encaminhar_aluno btn btn-primary btn-md"> <i class="fa fa-external-link"></i> Encaminhar </button>';
+                    }
+                    $button .= '<button type="button" name="edit_situacao" data-id="' . $lead->pag_id . '" class="edit_situacao btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
+                    return $button;
+
+                })->addColumn('formapgto', function ($lead) {
+                    if ($lead->pag_tipo == "boleto") {
+                        $formaPagamento = "Boleto";
+                    } else if ($lead->pag_tipo == "cartao") {
+                        $formaPagamento = "Cartão";
+                    } else {
+                        $formaPagamento = "Indefinido";
+                    }
+                    return $formaPagamento;
+
+                })->addColumn('tipo', function ($lead) {
+                    if ($lead->pag_status == 0) {
+                        $status = "Processando";
+                    } else if ($lead->pag_status == 2) {
+                        $status = "Pago";
+                    } else {
+                        $status = "Indefinido";
+                    }
+                    return $status;
+
+                })->addColumn('situacaoaluno', function ($lead) {
+                    if ($lead->situacao == 1) {
+                        $staluno = "Matriculado";
+                    } else if ($lead->situacao == 2) {
+                        $staluno = "Em Negociação";
+                    } else if ($lead->situacao == 3) {
+                        $staluno = "Desistiu";
+                    } else {
+                        $staluno = "Indefinido";
+                    }
+                    return $staluno;
+
+                })->addColumn('conheceu', function ($lead) {
+                    if ($lead->contato == 0) {
+                        $contato = "Site";
+                    } else if ($lead->situacao == 1) {
+                        $contato = "Facebook";
+                    } else if ($lead->situacao == 2) {
+                        $contato = "Instagram";
+                    } else if ($lead->situacao == 3) {
+                        $contato = "Eventos";
+                    } else {
+                        $contato = "Outros";
+                    }
+                    return $contato;
+
+                })->addColumn('destino', function ($lead) {
+                    if ($lead->und_destino == "") {
+                        $destino = "Indefinido";
+                    } else {
+                        $dest = DB::connection('mysql2')->table('unidade')
+                            ->select('unidade')->where('codUnidade', '=', $lead->und_destino)->pluck('unidade');
+                        $destino = $dest[0];
+                    }
+                    return $destino;
+
+                })->rawColumns(['action', 'formapgto', 'tipo', 'situacaoaluno', 'conheceu', 'destino'])->make(true);
+
             } else {
 
                 $leads = DB::connection('mysql2')
@@ -146,62 +214,62 @@ class LeadController extends Controller
                     return $button;
 
                 })->addColumn('formapgto', function ($lead) {
-                    if ($lead->pag_tipo =="boleto"){
+                    if ($lead->pag_tipo == "boleto") {
                         $formaPagamento = "Boleto";
-                    }else if($lead->pag_tipo =="cartao"){
+                    } else if ($lead->pag_tipo == "cartao") {
                         $formaPagamento = "Cartão";
-                    }else{
-                        $formaPagamento = "Indefinido"; 
+                    } else {
+                        $formaPagamento = "Indefinido";
                     }
                     return $formaPagamento;
-                
+
                 })->addColumn('tipo', function ($lead) {
-                    if ($lead->pag_status ==0){
+                    if ($lead->pag_status == 0) {
                         $status = "Processando";
-                    }else if($lead->pag_status ==2){
+                    } else if ($lead->pag_status == 2) {
                         $status = "Pago";
-                    }else{
-                        $status = "Indefinido"; 
+                    } else {
+                        $status = "Indefinido";
                     }
                     return $status;
 
                 })->addColumn('situacaoaluno', function ($lead) {
-                    if ($lead->situacao ==1){
+                    if ($lead->situacao == 1) {
                         $staluno = "Matriculado";
-                    }else if($lead->situacao ==2){
+                    } else if ($lead->situacao == 2) {
                         $staluno = "Em Negociação";
-                    }else if($lead->situacao ==3){
-                        $staluno = "Desistiu"; 
-                    }else{
-                        $staluno = "Indefinido"; 
+                    } else if ($lead->situacao == 3) {
+                        $staluno = "Desistiu";
+                    } else {
+                        $staluno = "Indefinido";
                     }
                     return $staluno;
 
                 })->addColumn('conheceu', function ($lead) {
-                    if ($lead->contato ==0){
+                    if ($lead->contato == 0) {
                         $contato = "Site";
-                    }else if($lead->situacao ==1){
+                    } else if ($lead->situacao == 1) {
                         $contato = "Facebook";
-                    }else if($lead->situacao ==2){
-                        $contato = "Instagram"; 
-                    }else if($lead->situacao ==3){
-                        $contato = "Eventos"; 
-                    }else{
-                        $contato = "Outros"; 
+                    } else if ($lead->situacao == 2) {
+                        $contato = "Instagram";
+                    } else if ($lead->situacao == 3) {
+                        $contato = "Eventos";
+                    } else {
+                        $contato = "Outros";
                     }
                     return $contato;
 
                 })->addColumn('destino', function ($lead) {
-                    if ($lead->und_destino ==""){
+                    if ($lead->und_destino == "") {
                         $destino = "Indefinido";
-                    }else{
+                    } else {
                         $dest = DB::connection('mysql2')->table('unidade')
-                        ->select('unidade')->where('codUnidade', '=', $lead->und_destino)->pluck('unidade');
-                       $destino = $dest[0];
+                            ->select('unidade')->where('codUnidade', '=', $lead->und_destino)->pluck('unidade');
+                        $destino = $dest[0];
                     }
                     return $destino;
 
-                })->rawColumns(['action','formapgto','tipo','situacaoaluno','conheceu','destino'])->make(true);
+                })->rawColumns(['action', 'formapgto', 'tipo', 'situacaoaluno', 'conheceu', 'destino'])->make(true);
 
             }
         }
@@ -341,11 +409,16 @@ class LeadController extends Controller
         $mat = Leads::where('situacao', '=', '1')->get()->count();
         $des = Leads::where('situacao', '=', '2')->get()->count();
         $neg = Leads::where('situacao', '=', '3')->get()->count();
+        $leads = Leads::all()->count();
+
+        $totalMat = (1 + ($mat * 100)) / $leads;
+        $totalDes = (1 + ($des * 100)) / $leads;
+        $totalNeg = (1 + ($neg * 100)) / $leads;
 
         $data = [
-            'matricula' => $mat,
-            'negociado' => $neg,
-            'desistente' => $des,
+            'matricula' => $totalMat,
+            'negociado' => $totalNeg,
+            'desistente' => $totalDes,
         ];
         return response()->json($data);
     }
