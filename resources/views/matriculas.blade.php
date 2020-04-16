@@ -115,23 +115,23 @@
 
     <div class="row">
        <div class="col-md-6 col-sm-10 col-xs-6">
-            <div class="x_panel">
+            <div class="x_panel" style="height:260px!important;">
                 <div class="x_title">
                     <h2>Filtros<small>faça uma busca para encontrar resultados.</small></h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                 <div class="row">
-                <div class="col-md-4" >
+                <!-- <div class="col-md-4" >
           <select name = "unidade" class="form-control">
              <option>Selecione Unidade</option>
           </select>
-        </div>
+        </div> -->
         <div class="input-daterange">
-      <div class="col-md-4" >
+      <div class="col-md-6" >
           <input type="text" name = "from_date" id = "from_date" class="form-control" placeholder = "Data inicio" readonly/>
         </div>
-      <div class="col-md-4" >
+      <div class="col-md-6" >
            <input type="text" name = "to_date" id = "to_date" class="form-control" placeholder = "Data fim" readonly/>
          </div>
       <div class="col-md-4">
@@ -146,15 +146,62 @@
             </div>
         </div>
         <div class="col-md-6 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>Resultados</small></h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                <canvas id="canvasDoughnut" style="width: 100px; height: 100px!important;"></canvas>
-                </div>
+        <div class="x_panel">
+<div class="x_title">
+    <h2>Resultado</h2>
+
+<div class="clearfix"></div>
+    </div>
+        <div class="x_content">
+            <table class="" style="width:100%">
+                <tbody>
+                    <tr>
+                        <th style="width:37%;">
+                            <p> Total </p>
+                            </th>
+                        <th>
+                            <div class="col-lg-7 col-md-7 col-sm-7 ">
+                                <p class="">Em  Analise</p>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5 ">
+                                <p class="">Quantidade</p>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <canvas id="canvasDoughnut" style="140px; height: 140px;"></canvas>
+                        </td>
+                            <td>
+                                <table class="tile_info">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <p><i class="fa fa-square blue"></i>Matriculado </p>
+                                            </td>
+                                            <td>30%
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p><i class="fa fa-square green"></i>Em Negociação </p>
+                                            </td>
+                                            <td>10%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p><i class="fa fa-square purple"></i>Desistiu </p>
+                                            </td>
+                                            <td>20%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+        </div>
         </div>
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
