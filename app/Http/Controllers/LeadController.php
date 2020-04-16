@@ -120,8 +120,8 @@ class LeadController extends Controller
                         } else {
                             $button = '<button type="button" name="encaminhar_aluno" data-id="' . $lead->pag_id . '" class="encaminhar_aluno btn btn-primary btn-md"> <i class="fa fa-external-link"></i> Encaminhar </button>';
                         }
-                    }else{
-                        $button ="";
+                    } else {
+                        $button = "";
                     }
                     $button .= '<button type="button" name="edit_situacao" data-id="' . $lead->pag_id . '" class="edit_situacao btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
                     return $button;
@@ -215,8 +215,8 @@ class LeadController extends Controller
                         } else {
                             $button = '<button type="button" name="encaminhar_aluno" data-id="' . $lead->pag_id . '" class="encaminhar_aluno btn btn-primary btn-md"> <i class="fa fa-external-link"></i> Encaminhar </button>';
                         }
-                    }else{
-                        $button ="";
+                    } else {
+                        $button = "";
                     }
                     $button .= '<button type="button" name="edit_situacao" data-id="' . $lead->pag_id . '" class="edit_situacao btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
                     return $button;
@@ -300,7 +300,21 @@ class LeadController extends Controller
         $unidade_id = Auth::user()->unidade_id;
         $unidades = Unidade::all()->where("sophia_id", "=", $unidade_id);
 
-        return view('matriculas', compact("unidades"));
+        $mat = Leads::where('situacao', '=', '1')->get()->count();
+        $des = Leads::where('situacao', '=', '2')->get()->count();
+        $neg = Leads::where('situacao', '=', '3')->get()->count();
+        $leads = Leads::all()->count();
+
+        $totalMat = (1 + ($mat * 100)) / $leads;
+        $totalDes = (1 + ($des * 100)) / $leads;
+        $totalNeg = (1 + ($neg * 100)) / $leads;
+
+        $resultados = [
+            $totalMat,
+            $totalDes,
+            $totalNeg,
+        ];
+        return view('matriculas', compact("unidades", 'resultados'));
 
     }
 
@@ -419,14 +433,14 @@ class LeadController extends Controller
         $neg = Leads::where('situacao', '=', '3')->get()->count();
         $leads = Leads::all()->count();
 
-        $totalMat = (1 + ($mat * 100)) / $leads;
-        $totalDes = (1 + ($des * 100)) / $leads;
-        $totalNeg = (1 + ($neg * 100)) / $leads;
+        // $totalMat = (1 + ($mat * 100)) / $leads;
+        // $totalDes = (1 + ($des * 100)) / $leads;
+        // $totalNeg = (1 + ($neg * 100)) / $leads;
 
         $data = [
-            'matricula' => $totalMat,
-            'negociado' => $totalNeg,
-            'desistente' => $totalDes,
+            'matricula' => $mat,
+            'negociado' => $neg,
+            'desistente' => $des,
         ];
         return response()->json($data);
     }
