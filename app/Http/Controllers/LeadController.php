@@ -502,38 +502,46 @@ class LeadController extends Controller
     {
         $unidade_id = Auth::user()->unidade_id;
         $unidades = Unidade::all()->where("sophia_id", "=", $unidade_id);
-        if ($unidade_id > 0) {
-            $mat = PagamentoOnline::where('situacao', '=', '1')->where('unidade_id', '=', $unidade_id)->get()->count();
-            $des = PagamentoOnline::where('situacao', '=', '2')->where('unidade_id', '=', $unidade_id)->get()->count();
-            $neg = PagamentoOnline::where('situacao', '=', '3')->where('unidade_id', '=', $unidade_id)->get()->count();
-            $leads = PagamentoOnline::where('unidade_id', '=', $unidade_id)->count();
 
-            $totalMat = (1 + ($mat * 100)) / $leads;
-            $totalDes = (1 + ($des * 100)) / $leads;
-            $totalNeg = (1 + ($neg * 100)) / $leads;
+        $leads = PagamentoOnline::where('unidade_id', '=', $unidade_id)->count();
 
-            $resultados = [
-                $totalMat,
-                $totalDes,
-                $totalNeg,
-            ];
-            return view('matriculas', compact("unidades", 'resultados'));
+        if ($leads != null) {
+            if ($unidade_id > 0) {
+                $mat = PagamentoOnline::where('situacao', '=', '1')->where('unidade_id', '=', $unidade_id)->get()->count();
+                $des = PagamentoOnline::where('situacao', '=', '2')->where('unidade_id', '=', $unidade_id)->get()->count();
+                $neg = PagamentoOnline::where('situacao', '=', '3')->where('unidade_id', '=', $unidade_id)->get()->count();
+
+                $totalMat = (1 + ($mat * 100)) / $leads;
+                $totalDes = (1 + ($des * 100)) / $leads;
+                $totalNeg = (1 + ($neg * 100)) / $leads;
+
+                $resultados = [
+                    $totalMat,
+                    $totalDes,
+                    $totalNeg,
+                ];
+                return view('matriculas', compact("unidades", 'resultados'));
+            } else {
+                $mat = PagamentoOnline::where('situacao', '=', '1')->get()->count();
+                $des = PagamentoOnline::where('situacao', '=', '2')->get()->count();
+                $neg = PagamentoOnline::where('situacao', '=', '3')->get()->count();
+                $leads = PagamentoOnline::all()->count();
+
+                $totalMat = (1 + ($mat * 100)) / $leads;
+                $totalDes = (1 + ($des * 100)) / $leads;
+                $totalNeg = (1 + ($neg * 100)) / $leads;
+
+                $resultados = [
+                    $totalMat,
+                    $totalDes,
+                    $totalNeg,
+                ];
+                return view('matriculas', compact("unidades", 'resultados'));
+
+            }
         } else {
-            $mat = PagamentoOnline::where('situacao', '=', '1')->get()->count();
-            $des = PagamentoOnline::where('situacao', '=', '2')->get()->count();
-            $neg = PagamentoOnline::where('situacao', '=', '3')->get()->count();
-            $leads = PagamentoOnline::all()->count();
 
-            $totalMat = (1 + ($mat * 100)) / $leads;
-            $totalDes = (1 + ($des * 100)) / $leads;
-            $totalNeg = (1 + ($neg * 100)) / $leads;
-
-            $resultados = [
-                $totalMat,
-                $totalDes,
-                $totalNeg,
-            ];
-            return view('matriculas', compact("unidades", 'resultados'));
+            return view('matriculas', compact("unidades"));
 
         }
     }
