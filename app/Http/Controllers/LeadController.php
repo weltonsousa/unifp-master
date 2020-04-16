@@ -92,7 +92,7 @@ class LeadController extends Controller
 
                 $leads = DB::connection('mysql2')
                     ->table('unidade')
-                    ->join('pagamentos_online', 'pagamentos_online.unidade_id', 'unidade.idUnidade')
+                    ->join('pagamentos_online', 'pagamentos_online.unidade_id', 'unidade.codUnidade')
                     ->select(
                         'pagamentos_online.pag_nome',
                         'pagamentos_online.situacao',
@@ -114,10 +114,14 @@ class LeadController extends Controller
                     ->get();
 
                 return Datatables::of($leads)->addColumn('action', function ($lead) {
-                    if ($lead->und_destino != "" || $lead->und_destino == "0") {
-                        $button = '<button type="button"  class="btn btn-success btn-md"> <i class="fa fa-check"></i> Encaminhado </button>';
-                    } else {
-                        $button = '<button type="button" name="encaminhar_aluno" data-id="' . $lead->pag_id . '" class="encaminhar_aluno btn btn-primary btn-md"> <i class="fa fa-external-link"></i> Encaminhar </button>';
+                    if ($lead->unidade_id == 0) {
+                        if ($lead->und_destino != "") {
+                            $button = '<button type="button"  class="btn btn-success btn-md"> <i class="fa fa-check"></i> Encaminhado </button>';
+                        } else {
+                            $button = '<button type="button" name="encaminhar_aluno" data-id="' . $lead->pag_id . '" class="encaminhar_aluno btn btn-primary btn-md"> <i class="fa fa-external-link"></i> Encaminhar </button>';
+                        }
+                    }else{
+                        $button ="";
                     }
                     $button .= '<button type="button" name="edit_situacao" data-id="' . $lead->pag_id . '" class="edit_situacao btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
                     return $button;
@@ -184,7 +188,7 @@ class LeadController extends Controller
 
                 $leads = DB::connection('mysql2')
                     ->table('unidade')
-                    ->join('pagamentos_online', 'pagamentos_online.unidade_id', 'unidade.idUnidade')
+                    ->join('pagamentos_online', 'pagamentos_online.unidade_id', 'unidade.codUnidade')
                     ->select(
                         'pagamentos_online.pag_nome',
                         'pagamentos_online.situacao',
@@ -205,10 +209,14 @@ class LeadController extends Controller
                     ->get();
 
                 return Datatables::of($leads)->addColumn('action', function ($lead) {
-                    if ($lead->und_destino != "" || $lead->und_destino == "0") {
-                        $button = '<button type="button"  class="btn btn-success btn-md"> <i class="fa fa-check"></i> Encaminhado </button>';
-                    } else {
-                        $button = '<button type="button" name="encaminhar_aluno" data-id="' . $lead->pag_id . '" class="encaminhar_aluno btn btn-primary btn-md"> <i class="fa fa-external-link"></i> Encaminhar </button>';
+                    if ($lead->unidade_id == 0) {
+                        if ($lead->und_destino != "") {
+                            $button = '<button type="button"  class="btn btn-success btn-md"> <i class="fa fa-check"></i> Encaminhado </button>';
+                        } else {
+                            $button = '<button type="button" name="encaminhar_aluno" data-id="' . $lead->pag_id . '" class="encaminhar_aluno btn btn-primary btn-md"> <i class="fa fa-external-link"></i> Encaminhar </button>';
+                        }
+                    }else{
+                        $button ="";
                     }
                     $button .= '<button type="button" name="edit_situacao" data-id="' . $lead->pag_id . '" class="edit_situacao btn btn-warning btn-md"> <i class="fa fa-pencil"></i> Editar </button>';
                     return $button;
