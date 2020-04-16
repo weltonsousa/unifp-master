@@ -20,8 +20,8 @@
           <script src="{{URL::asset('assets/filter/jquery.dataTables.min.js')}}" > </script>
           <script src="{{URL::asset('assets/filter/dataTables.bootstrap.min.js')}}"> </script>
           <script src="{{URL::asset('assets/filter/bootstrap-datepicker.js')}}"> </script>
-          <link rel="stylesheet" href="{{URL::asset('assets/filter/css/dataTables.bootstrap.min.css')}}"/>
-          <link rel="stylesheet" href ="{{URL::asset('assests/filter/bootstrap-datepicker.css')}}"/>
+          <link  href="{{URL::asset('assets/filter/dataTables.bootstrap.min.css')}}" rel="stylesheet">
+          <link  href ="{{URL::asset('assets/filter/bootstrap-datepicker.css')}}" rel="stylesheet">
 
     <div class="">
         <div class="page-title">
@@ -129,7 +129,7 @@
         </div>
         <div class="input-daterange">
       <div class="col-md-4" >
-          <input type="text" name = "from_date" id = "from_date" class="form-control" placeholder = "Data inicio" readonly/>
+          <input type="text" name = "from_date" id = "from_date" class="form-control" placeholder = "Data início" readonly/>
         </div>
       <div class="col-md-4" >
            <input type="text" name = "to_date" id = "to_date" class="form-control" placeholder = "Data fim" readonly/>
@@ -263,7 +263,7 @@
       load_data(from_date, to_date);
     }
     else {
-      alert('Data de inicio é requerido');
+      alert('Data de início é requerido');
     }
   });
 
