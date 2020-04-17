@@ -24,6 +24,42 @@
     <div class="clearfix"></div>
 
     <div class="row">
+    <div class="col-md-6 col-sm-10 col-xs-6">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Filtros<small>faça uma busca para encontrar resultados.</small></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                <form class="form-horizontal form-label-left input_mask" action="{{route('report-vendas')}}" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Unidade:</label>
+                            <div>
+                                <select class="form-control" name="unidade" style="width: 300px;">
+                                    <option value="0">Todas</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Período de matricula:</label>
+                            <div class="controls">
+                                <div class="input-prepend input-group">
+                                    <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                    <input type="text" style="width: 260px" name="periodo" id="reservation" class="form-control" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2">
+                                <button id="send" type="submit" class="btn btn-success"> <i class="fa fa-search"></i> Buscar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_content">
