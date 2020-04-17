@@ -501,7 +501,13 @@ class LeadController extends Controller
     public function matriculados()
     {
         $unidade_id = Auth::user()->unidade_id;
-        $unidades = Unidade::all()->where("sophia_id", "=", $unidade_id);
+
+        if ( Auth::user()->tipo_unidade == 1 ){
+            $unidades = Unidade::all();
+        }else{
+            $unidades = Unidade::all()->where("sophia_id", "=", $unidade_id);
+        }
+        
         if ($unidade_id > 0) {
             
             $mat = PagamentoOnline::where('situacao', '=', '1')->where('unidade_id', '=', $unidade_id)->get()->count();
