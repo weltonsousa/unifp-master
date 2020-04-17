@@ -38,11 +38,7 @@
                             <div>
                                 <select class="form-control" name="unidade" style="width: 300px;">
                                     <option value="0">Todas</option>
-                                    @if($unidade == null)
-                                        <option value="0" selected>Todas</option>
-                                    @else
-                                        <option value="0">Todas</option>
-                                    @endif
+
                                     @foreach ($unidades as $un)
                                         {{-- @if(count($unidade) > 0) --}}
                                         @if( is_array($unidade) ? count($unidade[$unidade->IdUnidade]) : 0 )
@@ -63,7 +59,7 @@
                             <div class="controls">
                                 <div class="input-prepend input-group">
                                     <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                    <input type="text" style="width: 260px" name="periodo" id="reservation" class="form-control" value="">
+                                    <input type="text" style="width: 260px" name="periodo" id="reservation" class="form-control" value="{{$periodo}}">
                                 </div>
                             </div>
                         </div>
@@ -96,8 +92,8 @@
                         <tbody>
                             @foreach ($alunos as $aluno)
                                 <tr>
-                                <td> {{$aluno->nome}}</td>
-                                <td> {{$aluno->email}}</td>
+                                <td> {{$aluno->pag_nome}}</td>
+                                <td> {{$aluno->pag_email}}</td>
                                 <td> {{$aluno->pag_telefone}}</td>
                                 <td>
                                 @if($aluno->pag_tipo == 'cartao')
@@ -154,7 +150,7 @@
     <script src="{{URL::asset('assets/datatables.net-keytable/js/dataTables.keyTable.min.js')}}"></script>
     <script src="{{URL::asset('assets/datatables.net-responsive-bs/js/responsive.bootstrap.js')}}"></script>
     <script src="{{URL::asset('assets/datatables.net-scroller/js/dataTables.scroller.min.js')}}"></script>
-    
+
 <!-- FastClick -->
 <script src="{{URL::asset('assets/fastclick/lib/fastclick.js')}}"></script>
 

@@ -43,18 +43,18 @@
                            @foreach ($alunos as $aluno)
                             <tr>
                               <td>
-                                {{$aluno->nome}}
+                                {{$aluno->pag_nome}}
                               </td>
-                              <td> {{$aluno->email}}</td>
+                              <td> {{$aluno->pag_email}}</td>
                                 <td>
-                                @php 
+                                @php
                                 $acentos = array(' ','-');
-                                $telefone = str_replace($acentos, '', $aluno->pag_telefone); 
+                                $telefone = str_replace($acentos, '', $aluno->pag_telefone);
                                  @endphp
                                  <a href="https://api.whatsapp.com/send?1=pt_BR&phone=55{{$telefone}}" target="_blank" class="btn btn-success"> <i class="fa fa-phone"></i> Clique Aqui Whatshaap </a>
                                 </td>
                                 <td> {{$aluno->pag_produto}}</td>
-                                <td> 
+                                <td>
                                 @if($aluno->pag_tipo == 'cartao')
                                    <button class="btn btn-success"> Cartão</button>
                                 @elseif($aluno->pag_tipo == 'boleto')
