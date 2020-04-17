@@ -183,7 +183,7 @@ $(function () {
             headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-            url:"http://localhost:8000/insert_lead",
+            url:"/insert_lead",
             method:"POST",
             data: $("#inserir-lead").serialize(),
             dataType:"json",
