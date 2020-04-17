@@ -21,7 +21,7 @@
           <script src="{{URL::asset('assets/filter/dataTables.bootstrap.min.js')}}"> </script>
           <script src="{{URL::asset('assets/filter/bootstrap-datepicker.js')}}"> </script>
           <link href="{{URL::asset('assets/filter/dataTables.bootstrap.min.css')}}" rel="stylesheet">
-          <link href ="{{URL::asset('assets/filter/bootstrap-datepicker.css')}}" rel="stylesheet">
+          <link href="{{URL::asset('assets/filter/bootstrap-datepicker.css')}}" rel="stylesheet">
 
     <div class="">
         <div class="page-title">
