@@ -210,7 +210,7 @@
 
 
                 <div class="x_content">
-                    <table id="matriculados" class="table table-striped jambo_table bulk_action" width="100%">
+                    <table id="matriculados" class="table table-striped jambo_table bulk_action" width="100%" style="zoom:0.8;">
                     <thead>
                             <tr>
                                 <th>Nome Aluno</th>
