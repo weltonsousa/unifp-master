@@ -96,8 +96,8 @@ class LeadController extends Controller
                 if (!empty($request->from_date)) {
 
                     $leads = DB::connection('mysql2')
-                        ->table('unidade')
-                        ->join('pagamentos_online', 'pagamentos_online.unidade_id', 'unidade.codUnidade')
+                        ->table('pagamentos_online')
+                        ->join('unidade', 'pagamentos_online.unidade_id', 'unidade.codUnidade')
                         ->select(
                             'pagamentos_online.pag_nome',
                             'pagamentos_online.situacao',
@@ -193,8 +193,8 @@ class LeadController extends Controller
                 } else {
 
                     $leads = DB::connection('mysql2')
-                        ->table('unidade')
-                        ->join('pagamentos_online', 'pagamentos_online.unidade_id', 'unidade.codUnidade')
+                        ->table('pagamentos_online')
+                        ->join('unidade', 'pagamentos_online.unidade_id', 'unidade.codUnidade')
                         ->select(
                             'pagamentos_online.pag_nome',
                             'pagamentos_online.situacao',
@@ -294,8 +294,8 @@ class LeadController extends Controller
                 if (!empty($request->from_date)) {
 
                     $leads = DB::connection('mysql2')
-                        ->table('unidade')
-                        ->join('pagamentos_online', 'pagamentos_online.unidade_id', 'unidade.codUnidade')
+                        ->table('pagamentos_online')
+                        ->join('unidade', 'pagamentos_online.unidade_id', 'unidade.codUnidade')
                         ->select(
                             'pagamentos_online.pag_nome',
                             'pagamentos_online.situacao',
@@ -390,8 +390,8 @@ class LeadController extends Controller
                 } else {
 
                     $leads = DB::connection('mysql2')
-                        ->table('unidade')
-                        ->join('pagamentos_online', 'pagamentos_online.unidade_id', 'unidade.codUnidade')
+                        ->table('pagamentos_online')
+                        ->join('unidade', 'pagamentos_online.unidade_id', 'unidade.codUnidade')
                         ->select(
                             'pagamentos_online.pag_nome',
                             'pagamentos_online.situacao',
