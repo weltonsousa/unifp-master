@@ -211,13 +211,110 @@ class AlunoController extends Controller
         $unidade_id = Auth::user()->unidade_id;
         $tipo = Auth::user()->tipo_unidade;
 
+        $periodo = request("periodo");
+        $unidade = request('unidade');
+
         if ($unidade_id > 0) {
 
-            $alunos = PagamentoOnline::where('pag_status', '<>', 2)->where('unidade_id', '=', $unidade_id)->get();
+            if (request('unidade') !== null || request('periodo') !== null) {
+                if (request('unidade') > 0 && request('periodo') === null) {
+
+                    $alunos = PagamentoOnline::where('pag_status', '<>', 2)->where('unidade_id', '=', $unidade_id)->get();
+
+                } else if (request('unidade') === "0" && request('periodo') !== null) {
+                    $datas = explode("-", request('periodo'));
+                    $datas[0] = explode("/", trim($datas[0], " "));
+                    $datas[0] = $datas[0][2] . '-' . $datas[0][1] . '-' . $datas[0][0];
+                    $datas[1] = explode("/", trim($datas[1], " "));
+                    $datas[1] = $datas[1][2] . '-' . $datas[1][1] . '-' . $datas[1][0];
+                    $alunos = PagamentoOnline::whereRaw(DB::raw("DATE(pag_data) between '" . $datas[0] . "' and '" . $datas[1] . "'"))
+                        ->where('unidade_id', '=', $unidade_id)
+                        ->where('pag_status', '<>', 2)
+                        ->orderby('cliente_id', 'ASC')
+                        ->get();
+                } else {
+                    $datas = explode("-", request('periodo'));
+                    $datas[0] = explode("/", trim($datas[0], " "));
+                    $datas[0] = $datas[0][2] . '-' . $datas[0][1] . '-' . $datas[0][0];
+                    $datas[1] = explode("/", trim($datas[1], " "));
+                    $datas[1] = $datas[1][2] . '-' . $datas[1][1] . '-' . $datas[1][0];
+                    $alunos = PagamentoOnline::whereRaw(DB::raw("DATE(pag_data) between '" . $datas[0] . "' and '" . $datas[1] . "'"))
+                        ->where('unidade_id', '=', $unidade_id)
+                        ->where('pag_status', '<>', 2)
+                        ->orderby('cliente_id', 'ASC')
+                        ->get();
+
+                }
+                return view(
+                    'boletos',
+                    [
+                        'unidades' => Unidade::All(),
+                        'unidade' => Unidade::where('IdUnidade', $unidade)->first(),
+                        'periodo' => $periodo,
+                        'alunos' => $alunos,
+                    ]);
+
+            } else {
+                return view(
+                    'boletos',
+                    [
+                        'alunos' => [],
+                        'unidades' => Unidade::All(),
+                        'unidade' => Unidade::where('IdUnidade', $unidade)->first(),
+                        'periodo' => $periodo,
+                    ]
+                );
+            }
 
         } else {
 
-            $alunos = PagamentoOnline::where('pag_status', '<>', 2)->get();
+            if (request('unidade') !== null || request('periodo') !== null) {
+                if (request('unidade') == 0 && request('periodo') === null) {
+                    $alunos = PagamentoOnline::where('pag_status', '<>', 2)->get();
+
+                } else if (request('unidade') === "0" && request('periodo') !== null) {
+                    $datas = explode("-", request('periodo'));
+                    $datas[0] = explode("/", trim($datas[0], " "));
+                    $datas[0] = $datas[0][2] . '-' . $datas[0][1] . '-' . $datas[0][0];
+                    $datas[1] = explode("/", trim($datas[1], " "));
+                    $datas[1] = $datas[1][2] . '-' . $datas[1][1] . '-' . $datas[1][0];
+                    $alunos = PagamentoOnline::whereRaw(DB::raw("DATE(pag_data) between '" . $datas[0] . "' and '" . $datas[1] . "'"))
+                        ->where('pag_status', '<>', 2)
+                        ->orderby('cliente_id', 'ASC')
+                        ->get();
+                } else {
+                    $datas = explode("-", request('periodo'));
+                    $datas[0] = explode("/", trim($datas[0], " "));
+                    $datas[0] = $datas[0][2] . '-' . $datas[0][1] . '-' . $datas[0][0];
+                    $datas[1] = explode("/", trim($datas[1], " "));
+                    $datas[1] = $datas[1][2] . '-' . $datas[1][1] . '-' . $datas[1][0];
+                    $alunos = PagamentoOnline::whereRaw(DB::raw("DATE(pag_data) between '" . $datas[0] . "' and '" . $datas[1] . "'"))
+                        ->where('pag_status', '<>', 2)
+                        ->orderby('cliente_id', 'ASC')
+                        ->get();
+
+                }
+                return view(
+                    'boletos',
+                    [
+                        'unidades' => Unidade::All(),
+                        'unidade' => Unidade::where('IdUnidade', $unidade)->first(),
+                        'periodo' => $periodo,
+                        'alunos' => $alunos,
+                    ]);
+
+            } else {
+                return view(
+                    'boletos',
+                    [
+                        'alunos' => [],
+                        'unidades' => Unidade::All(),
+                        'unidade' => Unidade::where('IdUnidade', $unidade)->first(),
+                        'periodo' => $periodo,
+                    ]
+                );
+            }
+
         }
 
         $unidades = Unidade::all();

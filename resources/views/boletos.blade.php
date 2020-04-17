@@ -31,7 +31,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                <form class="form-horizontal form-label-left input_mask" action="{{route('report-vendas')}}" method="post">
+                <form class="form-horizontal form-label-left input_mask" action="{{route('report-boletos')}}" method="post">
                         @csrf
                         <div class="form-group">
                             <label class="control-label col-md-2 col-sm-2 col-xs-12">Unidade:</label>
@@ -46,7 +46,7 @@
                             <div class="controls">
                                 <div class="input-prepend input-group">
                                     <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                    <input type="text" style="width: 260px" name="periodo" id="reservation" class="form-control" value="">
+                                <input type="text" style="width: 260px" name="periodo" id="reservation" class="form-control" value="{{$periodo}}">
                                 </div>
                             </div>
                         </div>
