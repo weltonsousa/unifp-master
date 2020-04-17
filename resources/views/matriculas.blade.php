@@ -242,7 +242,7 @@
       $j('.input-daterange').datepicker({
         todayBtn: 'linked',
         format: 'yyyy-mm-dd',
-        autoclose: true
+        autoclose: true,
       });
 
   load_data();
