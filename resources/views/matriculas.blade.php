@@ -245,9 +245,9 @@
         autoclose: true,
       });
 
-  load_data();
+ var currentdate = new Date();
 
-  function load_data(from_date = '', to_date = '') {
+   function load_data(from_date = currentdate, to_date = currentdate) {
     $('#matriculados').DataTable({
       processing: true,
       serverSide: true,
