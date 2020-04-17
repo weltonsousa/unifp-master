@@ -130,7 +130,7 @@ $('#inserir-aluno').on('submit', function (event) {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: "http://localhost:8000/insert_lead",
+            url: "/insert_lead",
             method: "POST",
             data: $("#inserir-aluno").serialize(),
             dataType: "json",
