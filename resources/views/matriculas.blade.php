@@ -194,6 +194,12 @@
                                             </td>
                                             <td>{{ number_format($resultados[2],2)}} %</td>
                                         </tr>
+                                        <tr>
+                                            <td>
+                                                <p><i class="fa fa-square red"></i>Outros </p>
+                                            </td>
+                                            <td>0.00 %</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </td>
