@@ -210,47 +210,16 @@ class AlunoController extends Controller
     {
         $unidade_id = Auth::user()->unidade_id;
         $tipo = Auth::user()->tipo_unidade;
+
         if ($unidade_id > 0) {
-            // $alunos = DB::connection('mysql2')
-            //     ->table('clientes')
-            //     ->join('pagamentos_online', 'pagamentos_online.cliente_id', 'clientes.id_cliente')
-            //     ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
-            //         'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
-            //         'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
-            //         'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo')
-            //     ->where('pagamentos_online.pag_status', '<>', 2)
-            //     ->where('pagamentos_online.pag_codigo', '!=', null)
-            //     ->where('pagamentos_online.unidade_id', '=', $unidade_id)
-            //     ->get();
+
             $alunos = PagamentoOnline::where('pag_status', '<>', 2)->where('unidade_id', '=', $unidade_id)->get();
 
-            // } else if ($unidade_id == 0 && $tipo == 2) {
-            //     $alunos = DB::connection('mysql2')
-            //         ->table('clientes')
-            //         ->join('pagamentos_online', 'pagamentos_online.cliente_id', 'clientes.id_cliente')
-            //         ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
-            //             'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
-            //             'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
-            //             'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo')
-            //         ->where('pagamentos_online.pag_status', '<>', 2)
-            //         ->where('pagamentos_online.pag_codigo', '!=', null)
-            //         ->where('pagamentos_online.unidade_id', '=', 0)
-            //         ->get();
         } else {
-            // $alunos = DB::connection('mysql2')
-            //     ->table('clientes')
-            //     ->join('pagamentos_online', 'pagamentos_online.cliente_id', 'clientes.id_cliente')
-            //     ->select('clientes.nome', 'clientes.email', 'pagamentos_online.pag_cpf_cnpj',
-            //         'pagamentos_online.pag_status', 'pagamentos_online.pag_data',
-            //         'pagamentos_online.pag_produto', 'pagamentos_online.pag_valor', 'pagamentos_online.pag_telefone',
-            //         'pagamentos_online.unidade_id', 'pagamentos_online.pag_tipo')
-            //     ->where('pagamentos_online.pag_status', '=', 0)
-            //     ->where('pagamentos_online.pag_codigo', '!=', null)
-            //     ->get();
 
             $alunos = PagamentoOnline::where('pag_status', '<>', 2)->get();
-
         }
+
         $unidades = Unidade::all();
 
         return view('boletos', compact('alunos', 'unidades'));
