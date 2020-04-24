@@ -32,6 +32,7 @@
                             <tr>
                                 <th>Nome</th>
                                 <th>E-mail</th>
+                                <th>CPF</th>
                                 <th>Data de cadastro</th>
                                 <th>Ultima atualização</th>
                                 <th>Nivel Acesso</th>
@@ -43,6 +44,7 @@
                                 <tr>
                                     <th>{{$user->name}}</th>
                                     <th>{{$user->email}}</th>
+                                    <th>{{$user->cpf}}</th>
                                     <th>{{$user->created_at}}</th>
                                     <th>{{$user->updated_at}}</th>
                                     <th>
