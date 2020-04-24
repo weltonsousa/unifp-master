@@ -55,7 +55,9 @@
                                 <h3>General</h3>
                                 <ul class="nav side-menu">
                                    @if ( Auth::user()->tipo_unidade == 1 )
-                                       @include("layouts.menus.master")
+                                        @include("layouts.menus.master")
+                                  @elseif (Auth::user()->tipo_unidade == 3)
+                                        @include("layouts.menus.consultor")
                                    @else
                                         @include("layouts.menus.online")
                                    @endif

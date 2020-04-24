@@ -145,6 +145,7 @@
                                     name="tipo-unidade">
                                     <option value="1">Própria</option>
                                     <option value="2">Franquia</option>
+                                    <option value="3">Consultor</option>
                                 </select>
                             </div>
                         </div>

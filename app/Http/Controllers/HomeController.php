@@ -350,7 +350,11 @@ class HomeController extends Controller
                     'periodoFiltro' => $periodoFiltro,
                 ]
             );
-        } else {
+        }elseif($tipo_unidade ==3){
+            $assinaturas = $alunos = DB::connection('mysql2')
+        ->table('assinaturas')->get();
+        return view('report-assinaturas',compact('assinaturas'));
+        }else {
             return redirect('report-vendas');
         }
     }

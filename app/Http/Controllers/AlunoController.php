@@ -6,6 +6,7 @@ use App\Aluno;
 use App\Leads;
 use App\PagamentoOnline;
 use App\Unidade;
+use App\Assinaturas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
