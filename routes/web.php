@@ -46,6 +46,7 @@ Route::get('/situacao-lead', 'LeadController@situacaoLead')->name('situacao-lead
 Route::get('/report-alunos', 'AlunoController@index')->name('report-alunos');
 Route::get('/report-vendas', 'AlunoController@vendasOnline')->name('report-vendas');
 Route::get('/report-assinaturas', 'HomeController@index')->name('report-assinaturas');
+Route::get('/leads-assinaturas', 'AlunoController@leadsAssinaturas')->name('leads-assinaturas');
 Route::get('/report-leads', 'AlunoController@leads')->name('report-leads');
 Route::get('/report-boletos', 'AlunoController@boletos')->name('report-boletos');
 Route::post('/report-boletos', 'AlunoController@boletos')->name('report-boletos');

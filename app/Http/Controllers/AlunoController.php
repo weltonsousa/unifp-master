@@ -85,6 +85,14 @@ class AlunoController extends Controller
         ]);
     }
 
+    public function leadsAssinaturas(){
+        $assinaturas = $alunos = DB::connection('mysql2')
+        ->table('assinaturas')
+        ->where('assinatura_status','!=',2)
+        ->get();
+        return view('leads-assinaturas',compact('assinaturas'));
+    }
+
     public function leadsExternos()
     {
         return view('leads-externos');
