@@ -48,8 +48,7 @@ return [
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
+            'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,
@@ -63,6 +62,7 @@ return [
             'database' => env('DB_DATABASE_SECOND'),
             'username' => env('DB_USERNAME_SECOND'),
             'password' => env('DB_PASSWORD_SECOND'),
+            'charset' => 'utf8'
         ],
 
         'pgsql' => [

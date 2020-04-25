@@ -71,7 +71,6 @@
                                 <th>Telefone</th>
                                 <th>Situação do Pagamento</th>
                                 <th>Data do Pagamento</th>
-                                <th>Curso</th>
                                 <th>Unidade</th>
                             </tr>
                         </thead>
@@ -88,10 +87,18 @@
                               {{ $assinatura->assinatura_telefone }}
                             </td>
                             <td>
-                              {{ $assinatura->assinatura_status}}
+                            @if($assinatura->assinatura_status == 0)
+                                <button class="btn btn-warning btn-block"> Processando </button>
+                            
+                            @elseif($assinatura->assinatura_status == 2)
+                            <button class="btn btn-success btn-block"> Pago </button>
+                            @else
+                            <button class="btn btn-danger btn-block"> Indefinido </button>
+                            @endif
                             </td>
                             <td>
-                            <th>{{\Carbon\Carbon::parse($assinatura->assinatura_data)->format("d/m/Y H:m:s")}}</th>
+                              {{\Carbon\Carbon::parse($assinatura->assinatura_data)->format("d/m/Y H:m:s")}}
+                            </td>
                            <td>
                            {{ $assinatura->unidade_id}}
                            </td>
