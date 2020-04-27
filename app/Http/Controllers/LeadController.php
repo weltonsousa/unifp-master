@@ -507,14 +507,14 @@ class LeadController extends Controller
         }else{
             $unidades = Unidade::all()->where("sophia_id", "=", $unidade_id);
         }
-        
+
         if ($unidade_id > 0) {
-            
+
             $mat = PagamentoOnline::where('situacao', '=', '1')->where('unidade_id', '=', $unidade_id)->get()->count();
             $des = PagamentoOnline::where('situacao', '=', '2')->where('unidade_id', '=', $unidade_id)->get()->count();
             $neg = PagamentoOnline::where('situacao', '=', '3')->where('unidade_id', '=', $unidade_id)->get()->count();
             $leads = PagamentoOnline::where('unidade_id', '=', $unidade_id)->count();
-             
+
             if($mat != "" || $des != "" || $neg != "" || $leads !=""){
                 $totalMat = (1 + ($mat * 100)) / $leads;
                 $totalDes = (1 + ($des * 100)) / $leads;
@@ -524,8 +524,6 @@ class LeadController extends Controller
                 $totalDes = 0;
                 $totalNeg = 0;
             }
-            
-            
 
             $resultados = [
                 $totalMat,
@@ -543,7 +541,7 @@ class LeadController extends Controller
             $totalDes = (1 + ($des * 100)) / $leads;
             $totalNeg = (1 + ($neg * 100)) / $leads;
 
-            
+
             $resultados = [
                 $totalMat,
                 $totalDes,

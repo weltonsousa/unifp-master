@@ -10,18 +10,18 @@
     <link href="{{URL::asset('assets/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{URL::asset('assets/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{URL::asset('assets/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{URL::asset('assets/datatables.net-responsive-bs/responsive.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('assets/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{URL::asset('assets/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
 
 @endsection
 @section('content')
     <!--filter tables -->
+          <link href="{{URL::asset('assets/filter/dataTables.bootstrap.min.css')}}" rel="stylesheet">
+          <link href="{{URL::asset('assets/filter/bootstrap-datepicker.css')}}" rel="stylesheet">
           <script src="{{URL::asset('assets/filter/jquery.min.js')}}"></script>
           <script src="{{URL::asset('assets/filter/jquery.dataTables.min.js')}}" > </script>
           <script src="{{URL::asset('assets/filter/dataTables.bootstrap.min.js')}}"> </script>
           <script src="{{URL::asset('assets/filter/bootstrap-datepicker.js')}}"> </script>
-          <link href="{{URL::asset('assets/filter/dataTables.bootstrap.min.css')}}" rel="stylesheet">
-          <link href="{{URL::asset('assets/filter/bootstrap-datepicker.css')}}" rel="stylesheet">
 
     <div class="">
         <div class="page-title">
@@ -73,8 +73,8 @@
                                 <label for=""> Unidade * </label>
                                 <select class="form-control" name="unidade">
                                  @foreach($unidades as $unidade)
-                                 <option value="{{$unidade->sophia_id}}">{{$unidade->Nome}}</option>
-                                 @endforeach;
+                                    <option value="{{$unidade->sophia_id}}">{{$unidade->Nome}}</option>
+                                 @endforeach
                                 </select>
                             </div>
                         </div>
@@ -249,6 +249,7 @@
         todayBtn: 'linked',
         format: 'yyyy-mm-dd',
         autoclose: true,
+         language: 'pt-BR',
       });
 
  var currentdate = new Date();

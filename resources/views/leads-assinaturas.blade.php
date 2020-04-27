@@ -69,9 +69,6 @@
                                 <th>Nome Aluno</th>
                                 <th>E-mail</th>
                                 <th>Telefone</th>
-                                <th>Situação do Pagamento</th>
-                                <th>Data do Pagamento</th>
-                                <th>Curso</th>
                                 <th>Unidade</th>
                             </tr>
                         </thead>
@@ -86,7 +83,7 @@
                             </td>
                             <td>
                               @php
-                               $telefone = $assinatura->assinatura_telefone; 
+                               $telefone = $assinatura->assinatura_telefone;
                                $espacos = array(" ","-");
                                $whats = str_replace($espacos,'',$telefone);
                               @endphp
@@ -94,13 +91,8 @@
                               <a href='https://api.whatsapp.com/send?1=pt_BR&phone={{'55'.$whats}}' class='btn btn-success' target='_blank'> <i class='fa fa-whatsapp'></i> {{$telefone}} </btn>
                               @endif
                             </td>
-                            <td>
-                              {{ $assinatura->assinatura_status}}
-                            </td>
-                            <td>
-                            <th>{{\Carbon\Carbon::parse($assinatura->assinatura_data)->format("d/m/Y H:m:s")}}</th>
                            <td>
-                           {{ $assinatura->unidade_id}}
+                           {{ $assinatura->unidade->unidade}}
                            </td>
                            </tr>
                         @endforeach

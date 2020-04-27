@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Aluno;
+use App\Assinaturas;
 use App\Leads;
 use App\PagamentoOnline;
 use App\Unidade;
-use App\Assinaturas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -85,12 +85,25 @@ class AlunoController extends Controller
         ]);
     }
 
-    public function leadsAssinaturas(){
-        $assinaturas = $alunos = DB::connection('mysql2')
-        ->table('assinaturas')
-        ->where('assinatura_status','!=',2)
-        ->get();
-        return view('leads-assinaturas',compact('assinaturas'));
+    public function leadsAssinaturas()
+    {
+        $unidade_id = Auth::user()->unidade_id;
+
+        if ($unidade_id > 0) {
+            $assinaturas = Assinaturas::where("unidade_id", '=', $unidade_id)->where('assinatura_status', '!=', 2)->get();
+        } else {
+            $assinaturas = Assinaturas::where('assinatura_status', '!=', 2)->get();
+        }
+        // $assinaturas = $alunos = DB::connection('mysql2')
+        //     ->table('assinaturas')
+        //     ->where('assinatura_status', '!=', 2)
+        //     ->get();
+
+        $unidade = Unidade::all();
+        return view('leads-assinaturas', [
+            'assinaturas' => $assinaturas,
+            'unidade' => $unidade,
+        ]);
     }
 
     public function leadsExternos()
@@ -200,6 +213,116 @@ class AlunoController extends Controller
                     'vendas-online',
                     [
                         'alunos' => [],
+                        'unidades' => Unidade::All(),
+                        'unidade' => Unidade::where('IdUnidade', $unidade)->first(),
+                        'periodo' => $periodo,
+                    ]
+                );
+            }
+        }
+    }
+    public function vendasAssinatura()
+    {
+        $unidade_id = Auth::user()->unidade_id;
+        $tipo = Auth::user()->tipo_unidade;
+        $nivel = Auth::user()->nivel;
+
+        $periodo = request("periodo");
+        $unidade = request('unidade');
+
+        if ($unidade_id > 0) {
+
+            if (request('unidade') !== null || request('periodo') !== null) {
+                if (request('unidade') > 0 && request('periodo') === null) {
+                    $assinaturas = Assinaturas::where("unidade_id", '=', $unidade_id)->get();
+
+                } else if (request('unidade') === "0" && request('periodo') !== null) {
+                    $datas = explode("-", request('periodo'));
+                    $datas[0] = explode("/", trim($datas[0], " "));
+                    $datas[0] = $datas[0][2] . '-' . $datas[0][1] . '-' . $datas[0][0];
+                    $datas[1] = explode("/", trim($datas[1], " "));
+                    $datas[1] = $datas[1][2] . '-' . $datas[1][1] . '-' . $datas[1][0];
+                    $assinaturas = Assinaturas::whereRaw(DB::raw("DATE(assinatura_data) between '" . $datas[0] . "' and '" . $datas[1] . "'"))
+                        ->where('unidade_id', '=', $unidade_id)
+                        ->where('assinatura_status', '=', 2)
+                        ->orderby('cliente_id', 'ASC')
+                        ->get();
+                } else {
+                    $datas = explode("-", request('periodo'));
+                    $datas[0] = explode("/", trim($datas[0], " "));
+                    $datas[0] = $datas[0][2] . '-' . $datas[0][1] . '-' . $datas[0][0];
+                    $datas[1] = explode("/", trim($datas[1], " "));
+                    $datas[1] = $datas[1][2] . '-' . $datas[1][1] . '-' . $datas[1][0];
+                    $assinaturas = Assinaturas::whereRaw(DB::raw("DATE(assinatura_data) between '" . $datas[0] . "' and '" . $datas[1] . "'"))
+                        ->where('unidade_id', '=', $unidade_id)
+                        ->where('assinatura_status', '=', 2)
+                        ->orderby('cliente_id', 'ASC')
+                        ->get();
+
+                }
+                return view(
+                    'report-assinaturas',
+                    [
+                        'unidades' => Unidade::All(),
+                        'unidade' => Unidade::where('IdUnidade', $unidade)->first(),
+                        'periodo' => $periodo,
+                        'assinaturas' => $assinaturas,
+                    ]);
+
+            } else {
+                return view(
+                    'report-assinaturas',
+                    [
+                        'assinaturas' => [],
+                        'unidades' => Unidade::All(),
+                        'unidade' => Unidade::where('IdUnidade', $unidade)->first(),
+                        'periodo' => $periodo,
+                    ]
+                );
+            }
+
+        } else {
+
+            if (request('unidade') !== null || request('periodo') !== null) {
+                if (request('unidade') == 0 && request('periodo') === null) {
+                    $assinaturas = Assinaturas::where("unidade_id", '=', $unidade_id)->get();
+
+                } else if (request('unidade') === "0" && request('periodo') !== null) {
+                    $datas = explode("-", request('periodo'));
+                    $datas[0] = explode("/", trim($datas[0], " "));
+                    $datas[0] = $datas[0][2] . '-' . $datas[0][1] . '-' . $datas[0][0];
+                    $datas[1] = explode("/", trim($datas[1], " "));
+                    $datas[1] = $datas[1][2] . '-' . $datas[1][1] . '-' . $datas[1][0];
+                    $assinaturas = Assinaturas::whereRaw(DB::raw("DATE(assinatura_data) between '" . $datas[0] . "' and '" . $datas[1] . "'"))
+                        ->where('assinatura_status', '=', 2)
+                        ->orderby('cliente_id', 'ASC')
+                        ->get();
+                } else {
+                    $datas = explode("-", request('periodo'));
+                    $datas[0] = explode("/", trim($datas[0], " "));
+                    $datas[0] = $datas[0][2] . '-' . $datas[0][1] . '-' . $datas[0][0];
+                    $datas[1] = explode("/", trim($datas[1], " "));
+                    $datas[1] = $datas[1][2] . '-' . $datas[1][1] . '-' . $datas[1][0];
+                    $assinaturas = Assinaturas::whereRaw(DB::raw("DATE(assinatura_data) between '" . $datas[0] . "' and '" . $datas[1] . "'"))
+                        ->where('assinatura_status', '=', 2)
+                        ->orderby('cliente_id', 'ASC')
+                        ->get();
+
+                }
+                return view(
+                    'report-assinaturas',
+                    [
+                        'unidades' => Unidade::All(),
+                        'unidade' => Unidade::where('IdUnidade', $unidade)->first(),
+                        'periodo' => $periodo,
+                        'assinaturas' => $assinaturas,
+                    ]);
+
+            } else {
+                return view(
+                    'report-assinaturas',
+                    [
+                        'assinaturas' => [],
                         'unidades' => Unidade::All(),
                         'unidade' => Unidade::where('IdUnidade', $unidade)->first(),
                         'periodo' => $periodo,

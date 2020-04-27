@@ -60,16 +60,16 @@
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="cpf">
                             {{ __('CPF') }} <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="cpf" type="text"
                                     class="form-control  col-md-7 col-xs-12{{ $errors->has('cpf') ? ' is-invalid' : '' }}"
-                                    name="email"
+                                    name="cpf"
                                     value="{{ old('cpf') }}"
                                     autofocus
-                                    placeholder="numero CPF" required="required" />
+                                    placeholder="número CPF" required="required" />
                                     @if ($errors->has('cpf'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('cpf') }}</strong>

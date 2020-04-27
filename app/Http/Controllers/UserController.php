@@ -42,11 +42,11 @@ class UserController extends Controller
             DB::beginTransaction();
             $user = User::create([
                 "name" => request('name'),
+                "cpf" => request('cpf'),
                 "email" => request('email'),
                 "unidade_id" => request('unidade'),
                 "tipo_unidade" => request('tipo-unidade'),
                 "password" => bcrypt(request('password')),
-                "nivel" => request('nivel'),
             ]);
             DB::commit();
         } else {
@@ -60,11 +60,11 @@ class UserController extends Controller
             $user = User::whereId(request('id'))->firstOrFail();
             if ($user) {
                 $user->name = request('name');
+                $user->cpf = request('cpf');
                 $user->email = request('email');
                 $user->unidade_id = request('unidade');
                 $user->tipo_unidade = request('tipo-unidade');
                 $user->password = bcrypt(request('password'));
-                $user->nivel =  request('nivel');
                 $user->save();
             }
             DB::commit();

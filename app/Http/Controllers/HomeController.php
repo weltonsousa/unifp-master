@@ -51,6 +51,7 @@ class HomeController extends Controller
     public function index()
     {
         $tipo_unidade = Auth::user()->tipo_unidade;
+        $unidade_id = Auth::user()->unidade_id;
 
         if ($tipo_unidade == 1) {
             $data = new DashboardViewModel();
@@ -350,12 +351,10 @@ class HomeController extends Controller
                     'periodoFiltro' => $periodoFiltro,
                 ]
             );
-        }elseif($tipo_unidade ==3){
-            $assinaturas = $alunos = DB::connection('mysql2')
-        ->table('assinaturas')->get();
-        return view('report-assinaturas',compact('assinaturas'));
-        }else {
+        } else if ($tipo_unidade == 2) {
             return redirect('report-vendas');
+        } else {
+            return redirect('report-assinaturas');
         }
     }
 

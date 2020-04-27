@@ -89,7 +89,7 @@
                             <td>
                             @if($assinatura->assinatura_status == 0)
                                 <button class="btn btn-warning btn-block"> Processando </button>
-                            
+
                             @elseif($assinatura->assinatura_status == 2)
                             <button class="btn btn-success btn-block"> Pago </button>
                             @else
@@ -100,7 +100,7 @@
                               {{\Carbon\Carbon::parse($assinatura->assinatura_data)->format("d/m/Y H:m:s")}}
                             </td>
                            <td>
-                           {{ $assinatura->unidade_id}}
+                           {{ $assinatura->unidade->unidade}}
                            </td>
                            </tr>
                         @endforeach
